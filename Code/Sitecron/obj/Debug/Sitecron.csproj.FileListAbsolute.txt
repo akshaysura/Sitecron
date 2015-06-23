@@ -1,0 +1,51 @@
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecron.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecron.pdb
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Client.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Kernel.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Telerik.Web.UI.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Lucene.Net.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Analytics.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\ComponentArt.Web.UI.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\HtmlAgilityPack.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Stimulsoft.Report.WebDesign.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Stimulsoft.Report.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Stimulsoft.Report.Web.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.NVelocity.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\ITHit.WebDAV.Server.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Mvp.Xml.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Logging.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Zip.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\RadEditor.Net2.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Stimulsoft.Base.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.pdb
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.pdb
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.pdb
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Client.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Kernel.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Telerik.Web.UI.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Lucene.Net.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\HtmlAgilityPack.xml
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.dll
+C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.csprojResolveAssemblyReference.cache
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Sitecron.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Sitecron.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Client.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Sitecore.Kernel.dll
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.xml
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.xml
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.xml
