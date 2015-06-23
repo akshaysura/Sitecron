@@ -1,17 +1,11 @@
-CWC (Custom Workflow Comments) module allows you to create an item template per workflow to store additional information during the workflow process of an item. When an item is processed in the workflow a dynamic form will render the fields defined in the custom template. The values entered will be store in an Item Bucket.
+SiteCron module provides an advanced way to run Cron based scheduling jobs using Sitecore and Quartz Scheduler. It uses the CronTrigger functionality to help you schedule simple to complex jobs.
 
-UI enhancements include changes to the workflow section in the Review tab and the more links in the Workbox.
+Add your scheduled jobs at /sitecore/system/Modules/Sitecron
 
-1. Install the Custom Workflow Comments (CWC) Module
-2. Define a template to gather information during Workflow actions
-3. Modify the template defined to inherit from templates/modules/Custom Workflow Comments/Custom Workflow Comments Base and also set the Bucketable checkbox to true
-4. Modify Workflow item under sitecore/System/Workflows and set the field Custom Template to the template you created
-5. Assign the Workflow to an item/template
-6. Turn on the Bucket Items in the Application Options
-7. Turn on the Developer Tab
-7. Click on sitecore\Content\Workflow Comments, then click on Configure tab and click on Sync
-8. Click on the Developer tab and click Re-Index Tree to index Workflow Comments and its dependents (at this moment, none!).
-9. Once item is available in the Workbox, you can see the module work when you Submit/Approve/Reject item in workflow
-10. You can check the history by clicking on the More link on the item in the Workbox or when the item is selected in the content editor, click on the Review tab and then click on History
+You can get more information about the Cron triggers and examples from Quartz Scheduler website at: http://www.quartz-scheduler.net/documentation/quartz-2.x/tutorial/crontriggers.html
 
-Instructions are also available on the blog along with the video: http://nttdatasitecore.com/Blog.aspx
+Sitecron comes with a sample script called SampleLogJob which logs an info log entry based on the schedule you set. Make sure any implementations of schedule jobs inherit Quartz.IJob.
+
+Thank you for using Sitecron.
+
+Instructions are also available on the blog along with the video: http://www.akshaysura.com
