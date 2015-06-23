@@ -1,9 +1,5 @@
 ﻿using Quartz;
 using Sitecore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Sitecron.Samples
 {
