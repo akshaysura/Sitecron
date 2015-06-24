@@ -40,10 +40,10 @@
       <HintPath>..\packages\Quartz.2.3.2\lib\net40\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Client">
-      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\PlainSitecore\Website\bin\Sitecore.Client.dll</HintPath>
+      <HintPath>..\..\Dependencies\Sitecore 7.2\Sitecore.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\..\..\inetpub\wwwroot\PlainSitecore\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Dependencies\Sitecore 7.2\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,12 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publishing\IncrementalSitePublishJob.cs" />
+    <Compile Include="Publishing\SmartSitePublishJob.cs" />
     <Compile Include="TestingJob.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
