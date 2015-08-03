@@ -33,7 +33,6 @@ C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\Lucene.Net.xml
 C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\bin\HtmlAgilityPack.xml
 C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.dll
 C:\Akshay\Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.pdb
-C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.csprojResolveAssemblyReference.cache
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.dll
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.pdb
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Sitecron.dll
@@ -49,3 +48,4 @@ C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Common.Logging.Core.xml
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.pdb
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\bin\Quartz.xml
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\Code\Sitecron\obj\Debug\Sitecron.csprojResolveAssemblyReference.cache

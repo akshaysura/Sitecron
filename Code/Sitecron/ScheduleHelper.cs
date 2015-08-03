@@ -20,7 +20,7 @@ namespace Sitecron
 
             if (!string.IsNullOrEmpty(publishingInstance) && !string.IsNullOrEmpty(instanceName) && publishingInstance != instanceName)
             {
-                Log.Info(string.Format("Sitecron - Exit without initialization, this server is not the primary in the load balanced environment. {0}=={1}",publishingInstance, instanceName), this);
+                Log.Info(string.Format("Sitecron - Exit without initialization, this server is not the primary in the load balanced environment. {0}=={1}", publishingInstance, instanceName), this);
                 return;
             }
             else
@@ -29,43 +29,59 @@ namespace Sitecron
 
                 try
                 {
-                    IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-                    scheduler.Start();
-
-                    //get a list of all items in Sitecron folder and iterate through them
-                    //add them to the schedule
-
-                    string queryRetriveJobs = "fast:/sitecore/system/Modules/Sitecron//*[@@templateid = '{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']";
-                    string typeField = "Type";
-                    string cronExpressionField = "CronExpression";
-
-                    scheduler.Clear();
-
                     Database masterDb = Factory.GetDatabase("master");
-                    Item[] sitecronJobs = masterDb.SelectItems(queryRetriveJobs);
-                    if (sitecronJobs != null && sitecronJobs.Count() > 0)
+                    if (masterDb != null)
                     {
-                        foreach (Item i in sitecronJobs)
+                        IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                        scheduler.Start();
+
+                        //get a list of all items in Sitecron folder and iterate through them
+                        //add them to the schedule
+
+                        string queryRetriveJobs = "fast:/sitecore/system/Modules/Sitecron//*[@@templateid = '{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']";
+                        string typeField = "Type";
+                        string cronExpressionField = "CronExpression";
+                        string parametersField = "Parameters";
+
+                        scheduler.Clear();
+
+                        Item[] sitecronJobs = masterDb.SelectItems(queryRetriveJobs);
+
+                        Log.Info("Loading Sitecron Jobs", this);
+
+                        if (sitecronJobs != null && sitecronJobs.Count() > 0)
                         {
-                            if (!string.IsNullOrEmpty(i[typeField]) && !string.IsNullOrEmpty(i[cronExpressionField]))
+                            foreach (Item i in sitecronJobs)
                             {
-                                Type jobType = Type.GetType(i[typeField]);
-                                if (jobType != null)
+                                Log.Info("Loading Sitecron Job:" + i.Name, this);
+
+                                if (!string.IsNullOrEmpty(i[typeField]) && !string.IsNullOrEmpty(i[cronExpressionField]))
                                 {
-                                    IJobDetail jobDetail = JobBuilder.Create(jobType).Build();
+                                    Type jobType = Type.GetType(i[typeField]);
+                                    if (jobType != null)
+                                    {
+                                        IJobDetail jobDetail = JobBuilder.Create(jobType).Build();
+                                        jobDetail.JobDataMap.Add("Parameters", i[parametersField]);
 
-                                    ITrigger trigger = TriggerBuilder.Create()
-                                        .WithIdentity(i.Name)
-                                        .WithCronSchedule(i[cronExpressionField])
-                                        .ForJob(jobDetail)
-                                        .Build();
-                                    scheduler.ScheduleJob(jobDetail, trigger);
+                                        ITrigger trigger = TriggerBuilder.Create()
+                                            .WithIdentity(i.ID.ToString())
+                                            .WithCronSchedule(i[cronExpressionField])
+                                            .ForJob(jobDetail)
+                                            .Build();
+                                        scheduler.ScheduleJob(jobDetail, trigger);
 
-                                    Log.Info(string.Format("Sitecron - Loading Job: {0} Type: {1} Cron Expression: {2}", i.Name, i[typeField], i[cronExpressionField]), this);
+                                        Log.Info(string.Format("Sitecron - Loaded Job: {0} Type: {1} Cron Expression: {2} Parameters: {3}", i.Name, i[typeField], i[cronExpressionField], i[parametersField]), this);
+                                    }
+                                    else
+                                        Log.Info(string.Format("Sitecron - Job Not Loaded: {0} Type: {1} Cron Expression: {2}", i.Name, i[typeField], i[cronExpressionField]), this);
                                 }
+                                else
+                                    Log.Info(string.Format("Sitecron - Job Not Loaded: {0} Type: {1} Cron Expression: {2}", i.Name, i[typeField], i[cronExpressionField]), this);
                             }
                         }
                     }
+                    else
+                        Log.Info("Sitecron - Exit, Master db not found.", this);
                 }
                 catch (Exception ex)
                 {

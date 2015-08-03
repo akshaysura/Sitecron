@@ -47,6 +47,6 @@ C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\Samp
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\bin\Debug\Common.Logging.Core.xml
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\bin\Debug\Quartz.pdb
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\bin\Debug\Quartz.xml
-C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\obj\Debug\SampleJob.csprojResolveAssemblyReference.cache
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\obj\Debug\SampleJob.dll
 C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\obj\Debug\SampleJob.pdb
+C:\Akshay 2015\Akshay - 12092014\Sitecore Source\Modules\Sitecron\SampleJob\SampleJob\obj\Debug\SampleJob.csprojResolveAssemblyReference.cache
