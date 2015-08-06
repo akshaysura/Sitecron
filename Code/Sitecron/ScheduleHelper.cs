@@ -4,10 +4,9 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecron.SitecronSettings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Sitecron
 {
@@ -29,6 +28,7 @@ namespace Sitecron
 
                 try
                 {
+                    //currently we are restricting this module to run using Master
                     Database masterDb = Factory.GetDatabase("master");
                     if (masterDb != null)
                     {
@@ -37,11 +37,7 @@ namespace Sitecron
 
                         //get a list of all items in Sitecron folder and iterate through them
                         //add them to the schedule
-
                         string queryRetriveJobs = "fast:/sitecore/system/Modules/Sitecron//*[@@templateid = '{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']";
-                        string typeField = "Type";
-                        string cronExpressionField = "CronExpression";
-                        string parametersField = "Parameters";
 
                         scheduler.Clear();
 
@@ -55,28 +51,33 @@ namespace Sitecron
                             {
                                 Log.Info("Loading Sitecron Job:" + i.Name, this);
 
-                                if (!string.IsNullOrEmpty(i[typeField]) && !string.IsNullOrEmpty(i[cronExpressionField]))
+                                if (!string.IsNullOrEmpty(i[FieldNames.Type]) && !string.IsNullOrEmpty(i[FieldNames.CronExpression]))
                                 {
-                                    Type jobType = Type.GetType(i[typeField]);
+                                    Type jobType = Type.GetType(i[FieldNames.Type]);
                                     if (jobType != null)
                                     {
                                         IJobDetail jobDetail = JobBuilder.Create(jobType).Build();
-                                        jobDetail.JobDataMap.Add("Parameters", i[parametersField]);
+                                        jobDetail.JobDataMap.Add(FieldNames.Parameters, i[FieldNames.Parameters]);
+
+                                        if (!string.IsNullOrEmpty(i[FieldNames.Items]))
+                                        {
+                                            jobDetail.JobDataMap.Add(FieldNames.Items, i[FieldNames.Items]);
+                                        }
 
                                         ITrigger trigger = TriggerBuilder.Create()
                                             .WithIdentity(i.ID.ToString())
-                                            .WithCronSchedule(i[cronExpressionField])
+                                            .WithCronSchedule(i[FieldNames.CronExpression])
                                             .ForJob(jobDetail)
                                             .Build();
                                         scheduler.ScheduleJob(jobDetail, trigger);
 
-                                        Log.Info(string.Format("Sitecron - Loaded Job: {0} Type: {1} Cron Expression: {2} Parameters: {3}", i.Name, i[typeField], i[cronExpressionField], i[parametersField]), this);
+                                        Log.Info(string.Format("Sitecron - Loaded Job: {0} Type: {1} Cron Expression: {2} Parameters: {3}", i.Name, i[FieldNames.Type], i[FieldNames.CronExpression], i[FieldNames.Parameters]), this);
                                     }
                                     else
-                                        Log.Info(string.Format("Sitecron - Job Not Loaded: {0} Type: {1} Cron Expression: {2}", i.Name, i[typeField], i[cronExpressionField]), this);
+                                        Log.Info(string.Format("Sitecron - Job Not Loaded - Could not load Type: {0} Type: {1} Cron Expression: {2}", i.Name, i[FieldNames.Type], i[FieldNames.CronExpression]), this);
                                 }
                                 else
-                                    Log.Info(string.Format("Sitecron - Job Not Loaded: {0} Type: {1} Cron Expression: {2}", i.Name, i[typeField], i[cronExpressionField]), this);
+                                    Log.Info(string.Format("Sitecron - Job Not Loaded Invalid Type or Cron Expression: {0} Type: {1} Cron Expression: {2}", i.Name, i[FieldNames.Type], i[FieldNames.CronExpression]), this);
                             }
                         }
                     }
