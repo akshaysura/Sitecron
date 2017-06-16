@@ -1,10 +1,7 @@
-﻿using Sitecore.Data;
-using Sitecore.Data.Items;
+﻿using Sitecore.Data.Items;
 using Sitecore.Events;
+using Sitecron.SitecronSettings;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Sitecron.Events
 {
@@ -14,9 +11,9 @@ namespace Sitecron.Events
         {
             Item deletedItem = Event.ExtractParameter(args, 0) as Item;
 
-            if (deletedItem != null && deletedItem.Database.Name.ToLower() == "master")
+            if (deletedItem != null && deletedItem.Database.Name.ToLower() == SitecronConstants.SitecoreDatabases.Master)
             {
-                if (deletedItem.TemplateID == ID.Parse("{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}")) //matched Sitecron job template
+                if (SitecronConstants.Templates.SitecronJobTemplateID == deletedItem.TemplateID) //matched Sitecron job template
                 {
                     ScheduleHelper scheduler = new ScheduleHelper();
                     scheduler.InitializeScheduler();
