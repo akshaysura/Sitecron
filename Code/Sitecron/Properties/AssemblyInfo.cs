@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sitecron")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SiteCron module provides an advanced way to run Cron based scheduling jobs using Sitecore and Quartz Scheduler. It uses the CronTrigger functionality to help you schedule simple to complex jobs.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Akshay Sura")]
 [assembly: AssemblyProduct("Sitecron")]

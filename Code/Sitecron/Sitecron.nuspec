@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SiteCron</id>
+    <version>$version$</version>
+    <title>SiteCron</title>
+    <authors>Akshay Sura</authors>
+    <owners>Akshay Sura</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/akshaysura/Sitecron</projectUrl>
+    <iconUrl>https://avatars0.githubusercontent.com/u/11164912</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SiteCron module provides an advanced way to run Cron based scheduling jobs using Sitecore and Quartz Scheduler. It uses the CronTrigger functionality to help you schedule simple to complex jobs.</description>
+    <releaseNotes>Bug fixes, Archive after Execute and disabled flag.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>sitecore sitecron cronscheduler</tags>
+  </metadata>
+</package>
