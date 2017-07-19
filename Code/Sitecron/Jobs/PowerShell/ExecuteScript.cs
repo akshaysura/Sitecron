@@ -22,6 +22,7 @@ namespace Sitecron.Jobs.PowerShell
             try
             {
                 JobDataMap dataMap = context.JobDetail.JobDataMap;
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
 
                 string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items);
                 string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters);
@@ -30,12 +31,12 @@ namespace Sitecron.Jobs.PowerShell
 
                 if (!string.IsNullOrEmpty(scriptIDs))
                 {
-                    Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
+                    Database contextDb = Factory.GetDatabase(contextDbName);
 
                     List<Item> scriptItems = new List<Item>();
                     string id = scriptIDs.Split('|').FirstOrDefault(); //only doing the first script item, running multiple scripts can cause issues especially if they call other scripts etc.
 
-                    Item scriptItem = masterDb.GetItem(new ID(id));
+                    Item scriptItem = contextDb.GetItem(new ID(id));
 
                     Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0} {1}", scriptItem.Name, id), this);
 

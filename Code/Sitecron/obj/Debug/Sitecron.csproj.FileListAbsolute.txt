@@ -12,6 +12,5 @@ D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging.Core.xml
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Quartz.pdb
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Quartz.xml
-D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\obj\Debug\Sitecron.csprojResolveAssemblyReference.cache
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\obj\Debug\Sitecron.dll
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\obj\Debug\Sitecron.pdb

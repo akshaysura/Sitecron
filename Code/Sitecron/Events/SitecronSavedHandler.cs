@@ -11,13 +11,10 @@ namespace Sitecron.Events
         {
             Item savedItem = Event.ExtractParameter(args, 0) as Item;
 
-            if (savedItem != null && savedItem.Database.Name.ToLower() == SitecronConstants.SitecoreDatabases.Master)
+            if (savedItem != null && SitecronConstants.Templates.SitecronJobTemplateID == savedItem.TemplateID) //matched Sitecron job template
             {
-                if (SitecronConstants.Templates.SitecronJobTemplateID == savedItem.TemplateID) //matched Sitecron job template
-                {
                     ScheduleHelper scheduler = new ScheduleHelper();
                     scheduler.InitializeScheduler();
-                }
             }
         }
 

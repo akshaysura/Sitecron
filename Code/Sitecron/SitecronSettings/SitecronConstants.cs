@@ -22,9 +22,13 @@ namespace Sitecron.SitecronSettings
             public const string ItemID = "ItemID";
         }
 
+        public static class SettingsNames
+        {
+            public const string SiteCronContextDB = "SiteCronContextDB";
+        }
         public static class Queries
         {
-            public const string QueryRetriveJobs = ("/sitecore/system/Modules/Sitecron//*");
+            public const string QueryRetriveJobs = ("/sitecore/system/Modules/Sitecron//*[@@templateid='{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']");
         }
 
         public static class SitecoreDatabases

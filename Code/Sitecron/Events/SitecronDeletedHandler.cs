@@ -11,13 +11,11 @@ namespace Sitecron.Events
         {
             Item deletedItem = Event.ExtractParameter(args, 0) as Item;
 
-            if (deletedItem != null && deletedItem.Database.Name.ToLower() == SitecronConstants.SitecoreDatabases.Master)
+            if (deletedItem != null && SitecronConstants.Templates.SitecronJobTemplateID == deletedItem.TemplateID) //matched Sitecron job template
             {
-                if (SitecronConstants.Templates.SitecronJobTemplateID == deletedItem.TemplateID) //matched Sitecron job template
-                {
-                    ScheduleHelper scheduler = new ScheduleHelper();
-                    scheduler.InitializeScheduler();
-                }
+                ScheduleHelper scheduler = new ScheduleHelper();
+                scheduler.InitializeScheduler();
+
             }
         }
     }

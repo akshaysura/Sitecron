@@ -44,21 +44,36 @@ namespace Sitecron.Listeners
 
             if (archiveItem && !string.IsNullOrEmpty(itemID))
             {
-                Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
-                
-                Item jobItem = masterDb.GetItem(new ID(itemID));
-                if (jobItem != null)
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
+                if (contextDbName != SitecronConstants.SitecoreDatabases.Master)
                 {
-                    using (new Sitecore.SecurityModel.SecurityDisabler())
+                    Database contextDb = Factory.GetDatabase(contextDbName);
+
+                    if (contextDb != null)
                     {
-                        Archive archive = ArchiveManager.GetArchive("archive", jobItem.Database);
-                        archive.ArchiveItem(jobItem);
-                        Log.Info(string.Format("Sitecron - Item Archived. (ItemID: {0} Archive:{1})", itemID, archiveItem.ToString()), this);
+                        ArchiveItem(contextDb, itemID);
                     }
                 }
+                Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
+                if (masterDb != null)
+                {
+                    ArchiveItem(masterDb, itemID);
+                }
             }
+        }
 
-            
+        private void ArchiveItem(Database db, string itemID)
+        {
+            Item jobItem = db.GetItem(new ID(itemID));
+            if (jobItem != null)
+            {
+                using (new Sitecore.SecurityModel.SecurityDisabler())
+                {
+                    Archive archive = ArchiveManager.GetArchive("archive", jobItem.Database);
+                    archive.ArchiveItem(jobItem);
+                    Log.Info(string.Format("Sitecron - Item Archived. (ItemID: {0} Archive:{1} DB: {2})", itemID, db.Name), this);
+                }
+            }
         }
     }
 }

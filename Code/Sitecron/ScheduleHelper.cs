@@ -18,6 +18,7 @@ namespace Sitecron
         {
             string publishingInstance = Settings.GetSetting("Publishing.PublishingInstance").ToLower();
             string instanceName = Settings.InstanceName.ToLower();
+            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
 
             if (!string.IsNullOrEmpty(publishingInstance) && !string.IsNullOrEmpty(instanceName) && publishingInstance != instanceName)
             {
@@ -31,8 +32,9 @@ namespace Sitecron
                 try
                 {
                     //currently we are restricting this module to run using Master
-                    Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
-                    if (masterDb != null)
+                    Database contextDb = Factory.GetDatabase(contextDbName);
+
+                    if (contextDb != null)
                     {
                         IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
                         scheduler.Start();
@@ -45,7 +47,7 @@ namespace Sitecron
                         //get a list of all items in Sitecron folder and iterate through them
                         //add them to the schedule
 
-                        Item[] sitecronJobs = masterDb.SelectItems(SitecronConstants.Queries.QueryRetriveJobs);
+                        Item[] sitecronJobs = contextDb.SelectItems(SitecronConstants.Queries.QueryRetriveJobs);
 
                         Log.Info("Loading Sitecron Jobs", this);
 
@@ -95,7 +97,7 @@ namespace Sitecron
                         }
                     }
                     else
-                        Log.Warn("Sitecron - Exit, Master db not found.", this);
+                        Log.Warn("Sitecron - Exit, context db not found.", this);
                 }
                 catch (Exception ex)
                 {
