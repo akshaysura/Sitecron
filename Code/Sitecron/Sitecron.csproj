@@ -85,6 +85,7 @@
     <Compile Include="Events\SitecronDeletedHandler.cs" />
     <Compile Include="Events\SitecronSavedHandler.cs" />
     <Compile Include="InitializeSitecron.cs" />
+    <Compile Include="Jobs\HelloWorld.cs" />
     <Compile Include="Jobs\PowerShell\ExecuteScript.cs" />
     <Compile Include="Jobs\Publishing\SmartPublish.cs" />
     <Compile Include="Listeners\CustomJobListener.cs" />
