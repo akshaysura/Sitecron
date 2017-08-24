@@ -12,7 +12,8 @@ namespace Sitecron.Events
         {
             Item savedItem = null;
             ItemSavedRemoteEventArgs remoteArgs = args as ItemSavedRemoteEventArgs;
-            
+
+            //Thank you Mike Edwards!
             if (remoteArgs != null)
             {
                 savedItem = remoteArgs.Item;
