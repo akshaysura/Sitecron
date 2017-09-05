@@ -15,4 +15,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>sitecore sitecron cronscheduler</tags>
   </metadata>
+  <files>
+  <file src="..\..\Package\SiteCron Items Only Sitecore Package.zip" target="content\SitecorePackage" /> 
+</files>
 </package>
