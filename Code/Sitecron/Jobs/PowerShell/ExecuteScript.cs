@@ -23,7 +23,7 @@ namespace Sitecron.Jobs.PowerShell
             {
                 //get job parameters
                 JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
-                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB); //New settign to figure out what the context DB is - Check SiteCron config file
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB); //New setting to figure out what the context DB is - Check SiteCron config file
 
                 string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items); //Get the items field value
                 string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.

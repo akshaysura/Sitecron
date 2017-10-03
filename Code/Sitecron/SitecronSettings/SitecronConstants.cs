@@ -21,6 +21,7 @@ namespace Sitecron.SitecronSettings
             public const string Items = "Items";
             public const string Disable = "Disable";
             public const string ArchiveAfterExecution = "ArchiveAfterExecution";
+            public const string ExecuteExactlyAtDateTime = "ExecuteExactlyAtDateTime";
 
             //non sitecore related, used for internal storage
             public const string ItemID = "ItemID";

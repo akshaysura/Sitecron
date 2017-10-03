@@ -1,8 +1,10 @@
 ﻿using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
+using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecron.Listeners;
@@ -55,9 +57,21 @@ namespace Sitecron
                         {
                             foreach (Item i in sitecronJobs)
                             {
-                                if (string.IsNullOrEmpty(i[SitecronConstants.FieldNames.Type]) || string.IsNullOrEmpty(i[SitecronConstants.FieldNames.CronExpression]))
+                                if (string.IsNullOrEmpty(i[SitecronConstants.FieldNames.Type]))
                                 {
-                                    Log.Info(string.Format("Sitecron - Job Not Loaded - Invalid Type or Cron Expression: {0} Type: {1} Cron Expression: {2}", i.Name, i[SitecronConstants.FieldNames.Type], i[SitecronConstants.FieldNames.CronExpression]), this);
+                                    Log.Info(string.Format("Sitecron - Job Not Loaded - {0} Invalid Type: {1}", i.Name, i[SitecronConstants.FieldNames.Type]), this);
+                                    continue;
+                                }
+
+                                if (string.IsNullOrEmpty(i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]) && string.IsNullOrEmpty(i[SitecronConstants.FieldNames.CronExpression]))
+                                {
+                                    Log.Info(string.Format("Sitecron - Job Not Loaded - Invalid ExecuteExactlyAtDateTime or Cron Expression: {0} ExecuteExactlyAtDateTime: {1} Cron Expression: {2}", i.Name, i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime], i[SitecronConstants.FieldNames.CronExpression]), this);
+                                    continue;
+                                }
+
+                                if (!string.IsNullOrEmpty(i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]) && !string.IsNullOrEmpty(i[SitecronConstants.FieldNames.CronExpression]))
+                                {
+                                    Log.Info(string.Format("Sitecron - Job Not Loaded - Both ExecuteExactlyAtDateTime and Cron Expression specified: {0} ExecuteExactlyAtDateTime: {1} Cron Expression: {2}", i.Name, i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime], i[SitecronConstants.FieldNames.CronExpression]), this);
                                     continue;
                                 }
 
@@ -85,14 +99,35 @@ namespace Sitecron
                                 jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.ArchiveAfterExecution, i[SitecronConstants.FieldNames.ArchiveAfterExecution]);
                                 jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.ItemID, i.ID.ToString());
 
-                                ITrigger trigger = TriggerBuilder.Create()
-                                    .WithIdentity(i.ID.ToString())
-                                    .WithCronSchedule(i[SitecronConstants.FieldNames.CronExpression])
-                                    .ForJob(jobDetail)
-                                    .Build();
-                                scheduler.ScheduleJob(jobDetail, trigger);
+                                if (!string.IsNullOrEmpty(i[SitecronConstants.FieldNames.CronExpression]))
+                                {
+                                    Log.Info(string.Format("Sitecron - Job Loaded - {0} using CronExpression: {1}", i.Name, i[SitecronConstants.FieldNames.CronExpression]), this);
+                                    ITrigger trigger = TriggerBuilder.Create()
+                                        .WithIdentity(i.ID.ToString())
+                                        .WithCronSchedule(i[SitecronConstants.FieldNames.CronExpression])
+                                        .ForJob(jobDetail)
+                                        .Build();
+                                    scheduler.ScheduleJob(jobDetail, trigger);
+                                }
 
-                                Log.Info(string.Format("Sitecron - Loaded Job: {0} Type: {1} Cron Expression: {2} Parameters: {3}", i.Name, i[SitecronConstants.FieldNames.Type], i[SitecronConstants.FieldNames.CronExpression], i[SitecronConstants.FieldNames.Parameters]), this);
+                                if (!string.IsNullOrEmpty(i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]))
+                                {
+                                    var startDateField = (DateField)i.Fields[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime];
+                                    if (startDateField != null)
+                                    {
+                                        Log.Info(string.Format("Sitecron - Job Loaded - {0} using ExecuteExactlyAtDateTime: {1}", i.Name, i[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]), this);
+                                        DateTimeOffset startDateTime = new DateTimeOffset(startDateField.DateTime.ToUniversalTime());
+                                        ITrigger trigger = TriggerBuilder.Create()
+                                            .WithIdentity(i.ID.ToString())
+                                            .StartAt(startDateTime)
+                                            .ForJob(jobDetail)
+                                            .Build();
+                                        scheduler.ScheduleJob(jobDetail, trigger);
+                                    }
+                                }
+
+
+                                Log.Info(string.Format("Sitecron - Loaded Job: {0} Type: {1} Cron Expression: {2} ExecuteExactlyAtDateTime: {3} Parameters: {4}", i.Name, i[SitecronConstants.FieldNames.Type], i[SitecronConstants.FieldNames.CronExpression], i[SitecronConstants.FieldNames.ArchiveAfterExecution], i[SitecronConstants.FieldNames.Parameters]), this);
                             }
                         }
                     }

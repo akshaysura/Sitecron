@@ -3,6 +3,10 @@ using Sitecore.Events;
 using Sitecron.SitecronSettings;
 using System;
 using Sitecore.Data.Events;
+using Sitecore;
+using Sitecore.Diagnostics;
+using System.Globalization;
+using Sitecore.Data.Fields;
 
 namespace Sitecron.Events
 {
@@ -25,10 +29,9 @@ namespace Sitecron.Events
 
             if (savedItem != null && SitecronConstants.Templates.SitecronJobTemplateID == savedItem.TemplateID) //matched Sitecron job template
             {
-                    ScheduleHelper scheduler = new ScheduleHelper();
-                    scheduler.InitializeScheduler();
+                ScheduleHelper scheduler = new ScheduleHelper();
+                scheduler.InitializeScheduler();
             }
         }
-
     }
 }
