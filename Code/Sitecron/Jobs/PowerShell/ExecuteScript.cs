@@ -15,17 +15,18 @@ using System.Linq;
 
 namespace Sitecron.Jobs.PowerShell
 {
-    public class ExecuteScript : IJob
+    public class ExecuteScript : IJob //Inherit from IJob interface from Quartz
     {
-        public void Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context) //Implement the Execute method
         {
             try
             {
-                JobDataMap dataMap = context.JobDetail.JobDataMap;
-                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
+                //get job parameters
+                JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB); //New settign to figure out what the context DB is - Check SiteCron config file
 
-                string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items);
-                string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters);
+                string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items); //Get the items field value
+                string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.
 
                 Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - {5}Parameters: {1} ScriptIDs: {2} {5}Fired at: {3} {5}Next Scheduled For:{4}", context.JobDetail.Key, rawParameters, scriptIDs, context.FireTimeUtc.Value.ToString("r"), context.NextFireTimeUtc.Value.ToString("r"), Environment.NewLine), this);
 
@@ -40,7 +41,7 @@ namespace Sitecron.Jobs.PowerShell
 
                     Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0} {1}", scriptItem.Name, id), this);
 
-                    NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters);
+                    NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters); //Use Sitecore WebUtil to parse the parameters
 
                     Run(scriptItem, parameters);
                 }
@@ -53,7 +54,7 @@ namespace Sitecron.Jobs.PowerShell
             }
         }
 
-
+        //This is where the PowerShell script is run. Its from SPE code.
         private void Run(Item speScript, NameValueCollection parameters)
         {
             var script = speScript.Fields[FieldIDs.Script].Value ?? string.Empty;

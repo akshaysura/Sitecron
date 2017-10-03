@@ -82,6 +82,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ExecuteJob.cs" />
     <Compile Include="Events\SitecronDeletedHandler.cs" />
     <Compile Include="Events\SitecronSavedHandler.cs" />
     <Compile Include="InitializeSitecron.cs" />

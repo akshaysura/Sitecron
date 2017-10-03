@@ -4,6 +4,10 @@ namespace Sitecron.SitecronSettings
 {
     public static class SitecronConstants
     {
+        public class ItemIds
+        {
+            public const string ExecuteNowFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
+        }
         public class Templates
         {
             public static ID SitecronJobTemplateID = new ID("{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}");
@@ -25,6 +29,7 @@ namespace Sitecron.SitecronSettings
         public static class SettingsNames
         {
             public const string SiteCronContextDB = "SiteCronContextDB";
+            public const string SiteCronExecuteNowSeconds = "SiteCronExecuteNowSeconds";
         }
         public static class Queries
         {

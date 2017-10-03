@@ -8,18 +8,18 @@ using System.Collections.Specialized;
 
 namespace Sitecron.Jobs.Publishing
 {
-    public class SmartPublish : IJob
+    public class SmartPublish : IJob //Inherit from IJob interface from Quartz
     {
-        public void Execute(IJobExecutionContext context)
+        public void Execute(IJobExecutionContext context) //Implement the Execute method
         {
             Log.Info("SitePublishJob Execute - Start", this);
 
             //get job parameters
-            JobDataMap dataMap = context.JobDetail.JobDataMap;
-            string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters);
-            NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters);
+            JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
+            string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.
+            NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters); //Use Sitecore WebUtil to parse the parameters
 
-            string targetParam = parameters["Target"];
+            string targetParam = parameters["Target"]; //Get the target parameter
             if (!string.IsNullOrEmpty(targetParam))
             {
                 Database master = Sitecore.Configuration.Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
