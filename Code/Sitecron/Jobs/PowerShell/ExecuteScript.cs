@@ -81,7 +81,6 @@ namespace Sitecron.Jobs.PowerShell
                         }
 
                         session.SetExecutedScript(speScript);
-                        //session.SetItemLocationContext(speScript); //not needed anymore?
                         session.ExecuteScriptPart(script);
                     }
                 }

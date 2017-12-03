@@ -1,7 +1,6 @@
 ﻿using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
-using Sitecore;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
@@ -89,7 +88,13 @@ namespace Sitecron
                                 }
 
                                 IJobDetail jobDetail = JobBuilder.Create(jobType).Build();
-                                jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.Parameters, i[SitecronConstants.FieldNames.Parameters]);
+                                string jobParams = i[SitecronConstants.FieldNames.Parameters];
+                                if (string.IsNullOrEmpty(jobParams))
+                                    jobParams = string.Concat(SitecronConstants.ParamNames.zSiteCronItemID, "=", i.ID.ToString());
+                                else
+                                    jobParams += string.Concat("&", SitecronConstants.ParamNames.zSiteCronItemID, "=" , i.ID.ToString());
+
+                                jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.Parameters, jobParams);
 
                                 if (!string.IsNullOrEmpty(i[SitecronConstants.FieldNames.Items]))
                                 {

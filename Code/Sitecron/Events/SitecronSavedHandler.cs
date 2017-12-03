@@ -3,10 +3,10 @@ using Sitecore.Events;
 using Sitecron.SitecronSettings;
 using System;
 using Sitecore.Data.Events;
-using Sitecore;
+using System.Reflection;
+using Sitecron.Extend;
+using Sitecore.Configuration;
 using Sitecore.Diagnostics;
-using System.Globalization;
-using Sitecore.Data.Fields;
 
 namespace Sitecron.Events
 {
@@ -31,6 +31,33 @@ namespace Sitecron.Events
             {
                 ScheduleHelper scheduler = new ScheduleHelper();
                 scheduler.InitializeScheduler();
+            }
+            else
+            {
+                try
+                {
+                    string typeName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronSavedHandlerType);
+                    if (!string.IsNullOrEmpty(typeName))
+                    {
+                        Type type = Type.GetType(typeName);
+                        if (type != null)
+                        {
+                            object instance = Activator.CreateInstance(type);
+                            if (instance != null && instance is ISavedHandler)
+                            {
+                                MethodInfo method = type.GetMethod("OnItemSaved");
+                                if (method != null)
+                                {
+                                    method.Invoke(instance, new object[] { sender, args });
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, this);
+                }
             }
         }
     }

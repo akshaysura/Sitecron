@@ -83,8 +83,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ExecuteJob.cs" />
+    <Compile Include="Custom\Publishing\ProcessPublishRestrictions.cs" />
     <Compile Include="Events\SitecronDeletedHandler.cs" />
+    <Compile Include="Events\SitecronSavingHandler.cs" />
     <Compile Include="Events\SitecronSavedHandler.cs" />
+    <Compile Include="Extend\ISavedHandler.cs" />
     <Compile Include="InitializeSitecron.cs" />
     <Compile Include="Jobs\HelloWorld.cs" />
     <Compile Include="Jobs\PowerShell\ExecuteScript.cs" />

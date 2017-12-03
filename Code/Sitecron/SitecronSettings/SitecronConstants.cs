@@ -6,7 +6,7 @@ namespace Sitecron.SitecronSettings
     {
         public class ItemIds
         {
-            public const string ExecuteNowFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
+            public const string AutoFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
         }
         public class Templates
         {
@@ -22,15 +22,24 @@ namespace Sitecron.SitecronSettings
             public const string Disable = "Disable";
             public const string ArchiveAfterExecution = "ArchiveAfterExecution";
             public const string ExecuteExactlyAtDateTime = "ExecuteExactlyAtDateTime";
+            public const string LastRunUTC = "LastRunUTC";
+            public const string NextRunUTC = "NextRunUTC";
+            public const string ExecutionTime = "ExecutionTime";
+            public const string LastRunLog = "LastRunLog";
 
             //non sitecore related, used for internal storage
             public const string ItemID = "ItemID";
         }
 
+        public static class ParamNames
+        {
+            public const string zSiteCronItemID = "zSiteCronItemID";
+        }
         public static class SettingsNames
         {
             public const string SiteCronContextDB = "SiteCronContextDB";
             public const string SiteCronExecuteNowSeconds = "SiteCronExecuteNowSeconds";
+            public const string SiteCronSavedHandlerType = "SiteCron.SavedHandlerType";
         }
         public static class Queries
         {

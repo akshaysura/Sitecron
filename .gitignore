@@ -23,6 +23,8 @@ bld/
 [Ll]og/
 bin/
 obj/
+**/*.dll 
+**/*.pdb
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -255,3 +257,8 @@ paket-files/
 
 # Sitecore -----------------------------
 *.nupkg
+
+# Visual Studio 
+**/*.sln.ide
+*.dll
+*.pdb

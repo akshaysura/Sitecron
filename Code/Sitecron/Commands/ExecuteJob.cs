@@ -23,10 +23,10 @@ namespace Sitecron.Commands
             {
                 string newItemName = ItemUtil.ProposeValidItemName(string.Concat("Execute Now ", scriptItem.Name, DateTime.Now.ToString(" yyyyMMddHHmmss")));
 
-                Item executeNowFolderItem = contextDb.GetItem(new ID(SitecronConstants.ItemIds.ExecuteNowFolderID));
-                if (executeNowFolderItem != null)
+                Item autoFolderItem = contextDb.GetItem(new ID(SitecronConstants.ItemIds.AutoFolderID));
+                if (autoFolderItem != null)
                 {
-                    Item newScriptItem = scriptItem.CopyTo(executeNowFolderItem, newItemName);
+                    Item newScriptItem = scriptItem.CopyTo(autoFolderItem, newItemName);
 
                     double addExecutionSeconds = 20;
                     if (!Double.TryParse(Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronExecuteNowSeconds), out addExecutionSeconds))
