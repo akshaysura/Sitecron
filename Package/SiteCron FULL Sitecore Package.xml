@@ -1,0 +1,276 @@
+<project>
+  <Metadata>
+    <metadata>
+      <PackageName>SiteCron FULL Sitecore Package</PackageName>
+      <Author>Akshay Sura</Author>
+      <Version />
+      <Revision />
+      <License />
+      <Comment />
+      <Attributes />
+      <Readme>This package is the full package which will install the items and files.
+
+If you are upgrading, use Merge Append option to get the new out of the box items.</Readme>
+      <Publisher />
+      <PostStep />
+      <PackageID />
+    </metadata>
+  </Metadata>
+  <SaveProject>True</SaveProject>
+  <Sources>
+    <xitems>
+      <Entries>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Context Menues/Default/Execute SiteCron Job Now/{E5A76232-7B0D-40FC-A236-7CFEE1E4B982}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Core - Execute Job Context Menu</Name>
+    </xitems>
+    <items>
+      <Database>master</Database>
+      <Root>{E72AE09A-81A4-4AA5-9539-289E19DC436F}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern>*</Pattern>
+          <FilterSearchType>Wildcards</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Templates</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{C9ADDAE6-2298-49F2-8C9E-920A24D3D6D9}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>System Modules</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{C0C88297-790F-4C94-A0AC-633903BF5E85}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>PowerShell Sample</Name>
+    </items>
+    <files>
+      <Root>/App_Config/Include/Sitecron</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include>
+        <FileNameFilter>
+          <Pattern />
+          <AcceptDirectories>False</AcceptDirectories>
+        </FileNameFilter>
+        <FileDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+        <FileDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+      </Include>
+      <Exclude />
+      <Name>App Config</Name>
+    </files>
+    <xfiles>
+      <Entries>
+        <x-item>/bin/Common.Logging.Core.dll</x-item>
+        <x-item>/bin/Common.Logging.Core.pdb</x-item>
+        <x-item>/bin/Common.Logging.Core.xml</x-item>
+        <x-item>/bin/Common.Logging.dll</x-item>
+        <x-item>/bin/Common.Logging.pdb</x-item>
+        <x-item>/bin/Common.Logging.xml</x-item>
+        <x-item>/bin/Quartz.dll</x-item>
+        <x-item>/bin/Quartz.pdb</x-item>
+        <x-item>/bin/Quartz.xml</x-item>
+        <x-item>/bin/Sitecron.dll</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Bin</Name>
+    </xfiles>
+  </Sources>
+  <Converter>
+    <TrivialConverter>
+      <Transforms />
+    </TrivialConverter>
+  </Converter>
+  <Include />
+  <Exclude />
+  <Name />
+</project>
