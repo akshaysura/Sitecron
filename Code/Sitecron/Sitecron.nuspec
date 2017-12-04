@@ -17,5 +17,6 @@
   </metadata>
   <files>
   <file src="..\..\Package\SiteCron Items Only Sitecore Package.zip" target="content\SitecorePackage" /> 
+  <file src="..\..\Package\SiteCron FULL Sitecore Package.zip" target="content\SitecorePackage" /> 
 </files>
 </package>
