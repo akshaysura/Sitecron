@@ -52,7 +52,7 @@ namespace Sitecron.Listeners
 
                 if (contextDb != null)
                 {
-                    //SetItemStats(contextDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
+                    SetItemStats(contextDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
                     if (archiveItem)
                         ArchiveItem(contextDb, itemID);
                 }
@@ -60,7 +60,7 @@ namespace Sitecron.Listeners
             Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
             if (masterDb != null)
             {
-                //SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
+                SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
                 if (archiveItem)
                     ArchiveItem(masterDb, itemID);
             }

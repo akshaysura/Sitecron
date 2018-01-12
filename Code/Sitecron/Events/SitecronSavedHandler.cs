@@ -7,6 +7,8 @@ using System.Reflection;
 using Sitecron.Extend;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
+using Sitecore;
+using static Sitecron.SitecronSettings.SitecronConstants;
 
 namespace Sitecron.Events
 {
@@ -16,6 +18,7 @@ namespace Sitecron.Events
         {
             Item savedItem = null;
             ItemSavedRemoteEventArgs remoteArgs = args as ItemSavedRemoteEventArgs;
+            ItemChanges savedItemChanges = Event.ExtractParameter(args, 1) as ItemChanges;
 
             //Thank you Mike Edwards!
             if (remoteArgs != null)
@@ -29,8 +32,15 @@ namespace Sitecron.Events
 
             if (savedItem != null && SitecronConstants.Templates.SitecronJobTemplateID == savedItem.TemplateID) //matched Sitecron job template
             {
-                ScheduleHelper scheduler = new ScheduleHelper();
-                scheduler.InitializeScheduler();
+                if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime))
+                {
+                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
+                }
+                else
+                {
+                    ScheduleHelper scheduler = new ScheduleHelper();
+                    scheduler.InitializeScheduler();
+                }
             }
             else
             {

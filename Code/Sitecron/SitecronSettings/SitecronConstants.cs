@@ -31,7 +31,13 @@ namespace Sitecron.SitecronSettings
             public const string ItemID = "ItemID";
         }
 
-        public static class ParamNames
+        public static class SiteCronFieldIds
+        {
+            public static ID LastRunUTC = new ID("{A363FA42-810F-48E8-87D8-ABE5991D9B61}");
+            public static ID NextRunUTC = new ID("{0571F1A5-E0BC-4256-8096-8F1738AF1071}");
+            public static ID ExecutionTime = new ID("{0D5EDDE7-08A6-424F-B751-CC2C1D48EBBA}");
+        }
+            public static class ParamNames
         {
             public const string zSiteCronItemID = "zSiteCronItemID";
         }
