@@ -57,7 +57,7 @@ namespace Sitecron.Jobs.PowerShell
         //This is where the PowerShell script is run. Its from SPE code.
         private void Run(Item speScript, NameValueCollection parameters)
         {
-            var script = speScript.Fields[FieldIDs.Script].Value ?? string.Empty;
+            var script = speScript.Fields[Templates.Script.Fields.ScriptBody].Value ?? string.Empty;
             if (!string.IsNullOrEmpty(script))
             {
                 Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", speScript.Name, speScript.ID.ToString()), this);

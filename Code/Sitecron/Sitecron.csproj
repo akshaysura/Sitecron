@@ -40,9 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cognifide.PowerShell, Version=3.1.0.37391, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Cognifide.PowerShell, Version=4.5.0.26896, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\PowerShell 4.5\Cognifide.PowerShell.dll</HintPath>
+      <HintPath>..\..\Dependencies\Powershell 4.7\Cognifide.PowerShell.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
