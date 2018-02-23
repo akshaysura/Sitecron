@@ -50,7 +50,7 @@ namespace Sitecron.Jobs.PowerShell
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron: Powershell.ExecuteScript: ERROR something went wrong - " + ex.Message, this);
+                Log.Error("Sitecron: Powershell.ExecuteScript: ERROR something went wrong - " + ex.Message, ex, this);
             }
         }
 

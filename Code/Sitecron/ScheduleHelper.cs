@@ -141,7 +141,7 @@ namespace Sitecron
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sitecron ERROR: " + ex.Message, this);
+                    Log.Error("Sitecron ERROR: " + ex.Message, ex, this);
                 }
             }
         }

@@ -66,7 +66,7 @@ namespace Sitecron.Events
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, this);
+                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, this);
                 }
             }
         }
