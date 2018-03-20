@@ -8,12 +8,22 @@ using Sitecron.Extend;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using Sitecore;
+using Sitecron.Jobs;
+using Sitecron.Scheduling;
 using static Sitecron.SitecronSettings.SitecronConstants;
 
 namespace Sitecron.Events
 {
     public class SitecronSavedHandler
     {
+        private readonly IScheduleManager _scheduleManager;
+
+        public SitecronSavedHandler(IScheduleManager scheduleManager)
+        {
+            Assert.ArgumentNotNull(scheduleManager, nameof(scheduleManager));
+            _scheduleManager = scheduleManager;
+        }
+
         public void OnItemSaved(object sender, EventArgs args)
         {
             Item savedItem = null;
@@ -38,8 +48,7 @@ namespace Sitecron.Events
                 }
                 else
                 {
-                    ScheduleHelper scheduler = new ScheduleHelper();
-                    scheduler.InitializeScheduler();
+                    _scheduleManager.ScheduleAllJobs();
                 }
             }
             else
