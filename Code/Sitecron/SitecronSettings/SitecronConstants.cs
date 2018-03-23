@@ -6,8 +6,10 @@ namespace Sitecron.SitecronSettings
     {
         public class ItemIds
         {
+            public const string RootFolderID = "{C9ADDAE6-2298-49F2-8C9E-920A24D3D6D9}";
             public const string AutoFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
         }
+
         public class Templates
         {
             public static ID SitecronJobTemplateID = new ID("{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}");
@@ -33,23 +35,29 @@ namespace Sitecron.SitecronSettings
 
         public static class SiteCronFieldIds
         {
+            public static ID CronExpression = new ID("{8BDF639E-21DE-48A7-9F93-CA85B0F695A3}");
             public static ID LastRunUTC = new ID("{A363FA42-810F-48E8-87D8-ABE5991D9B61}");
             public static ID NextRunUTC = new ID("{0571F1A5-E0BC-4256-8096-8F1738AF1071}");
             public static ID ExecutionTime = new ID("{0D5EDDE7-08A6-424F-B751-CC2C1D48EBBA}");
         }
-            public static class ParamNames
+
+        public static class ParamNames
         {
             public const string zSiteCronItemID = "zSiteCronItemID";
+            public const string SitecronJob = "SitecronJob";
         }
+
         public static class SettingsNames
         {
             public const string SiteCronContextDB = "SiteCronContextDB";
             public const string SiteCronExecuteNowSeconds = "SiteCronExecuteNowSeconds";
             public const string SiteCronSavedHandlerType = "SiteCron.SavedHandlerType";
         }
+
         public static class Queries
         {
-            public const string QueryRetriveJobs = ("/sitecore/system/Modules/Sitecron//*[@@templateid='{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']");
+            public const string QueryRetriveJobs =
+                ("/sitecore/system/Modules/Sitecron//*[@@templateid='{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}']");
         }
 
         public static class SitecoreDatabases
