@@ -14,7 +14,7 @@ namespace Sitecron.Core.Quartz
             if (manager == null)
             {
                 Log.Error(
-                    "Could not resolve instance of Sitecron.Core.Scheduling.IScheduleManager. Check service registration configuration.", SitecronConstants.ParamNames.Log4NetLogger);
+                    "Could not resolve instance of Sitecron.Core.Scheduling.IScheduleManager. Check service registration configuration.", this);
             }
             else
             {

@@ -22,7 +22,7 @@ namespace Sitecron.Core.Events
 
             if (deletedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, deletedItem))
             {
-                Log.Info("Sitecron based Item Deleted/Archived, reloading Jobs.", SitecronConstants.ParamNames.Log4NetLogger);
+                Log.Info("Sitecron based Item Deleted/Archived, reloading Jobs.", this);
                 _scheduleManager.ScheduleAllJobs();
             }
         }

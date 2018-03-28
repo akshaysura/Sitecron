@@ -40,7 +40,7 @@ namespace Sitecron.Custom.Publishing
             //            {
             //                var validFromDate = DateUtil.ToServerTime(validFromDateField.DateTime);
             //                var validToDate = DateUtil.ToServerTime(validToDateField.DateTime);
-            //                Log.Info(string.Format("VERSION ItemID:{0} ItemName:{1} ItemVersion:{2} version Publishable From:{3}  version Publishable To:{4}  ", savedItem.ID.ToString(), savedItem.Name, savedItem.Version.Number.ToString(), validFromDate.ToString(), validToDate.ToString()), SitecronConstants.ParamNames.Log4NetLogger);
+            //                Log.Info(string.Format("VERSION ItemID:{0} ItemName:{1} ItemVersion:{2} version Publishable From:{3}  version Publishable To:{4}  ", savedItem.ID.ToString(), savedItem.Name, savedItem.Version.Number.ToString(), validFromDate.ToString(), validToDate.ToString()), this);
 
             //                //need to add some checks and balances
 
@@ -66,7 +66,7 @@ namespace Sitecron.Custom.Publishing
             //                var publishDate = DateUtil.ToServerTime(publishDateField.DateTime);
             //                var unpublishDate = DateUtil.ToServerTime(unpublishDateField.DateTime);
 
-            //                Log.Info(string.Format("ITEM ItemID:{0} ItemName:{1} ItemVersion:{2} item Publishable From:{3}  item Publishable To:{4}", savedItem.ID.ToString(), savedItem.Name, savedItem.Version.Number.ToString(), publishDate.ToString(), unpublishDate.ToString()), SitecronConstants.ParamNames.Log4NetLogger);
+            //                Log.Info(string.Format("ITEM ItemID:{0} ItemName:{1} ItemVersion:{2} item Publishable From:{3}  item Publishable To:{4}", savedItem.ID.ToString(), savedItem.Name, savedItem.Version.Number.ToString(), publishDate.ToString(), unpublishDate.ToString()), this);
 
             //                //need to add some checks and balances
             //            }

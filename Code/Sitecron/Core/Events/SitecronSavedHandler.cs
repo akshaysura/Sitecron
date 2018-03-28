@@ -42,11 +42,11 @@ namespace Sitecron.Core.Events
             {
                 if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
                 {
-                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", SitecronConstants.ParamNames.Log4NetLogger);
+                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
                 }
                 else
                 {
-                    Log.Info("Sitecron based Item Saved/Created, reloading Jobs.", SitecronConstants.ParamNames.Log4NetLogger);
+                    Log.Info("Sitecron based Item Saved/Created, reloading Jobs.", this);
                     _scheduleManager.ScheduleAllJobs();
                 }
             }
@@ -74,7 +74,7 @@ namespace Sitecron.Core.Events
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, SitecronConstants.ParamNames.Log4NetLogger);
+                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, this);
                 }
             }
         }

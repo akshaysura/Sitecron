@@ -8,7 +8,7 @@ namespace Sitecron.Jobs
     {
         public void Execute(IJobExecutionContext context)
         {
-            Log.Info("Sitecron - Hello World", SitecronConstants.ParamNames.Log4NetLogger);
+            Log.Info("Sitecron - Hello World", this);
         }
     }
 }

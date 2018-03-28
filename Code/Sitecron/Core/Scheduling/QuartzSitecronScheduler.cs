@@ -37,7 +37,7 @@ namespace Sitecron.Core.Scheduling
 
             if (!string.IsNullOrEmpty(job.CronExpression))
             {
-                Log.Info($"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", SitecronConstants.ParamNames.Log4NetLogger);
+                Log.Info($"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
                 var trigger = TriggerBuilder.Create()
                     .WithIdentity(job.ItemId)
                     .WithCronSchedule(job.CronExpression)
@@ -49,7 +49,7 @@ namespace Sitecron.Core.Scheduling
             if (job.ExecuteExactlyAtDateTime.Value != DateTime.MinValue)
             {
                 Log.Info(
-                    $"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} Parameters: {job.Parameters}",SitecronConstants.ParamNames.Log4NetLogger);
+                    $"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} Parameters: {job.Parameters}", this);
                 var startDateTime =
                     new DateTimeOffset(job.ExecuteExactlyAtDateTime.Value.ToUniversalTime());
                 var trigger = TriggerBuilder.Create()
