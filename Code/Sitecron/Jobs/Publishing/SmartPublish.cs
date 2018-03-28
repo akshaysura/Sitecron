@@ -5,6 +5,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecron.SitecronSettings;
 using System.Collections.Specialized;
+using System.Text;
 
 namespace Sitecron.Jobs.Publishing
 {
@@ -31,9 +32,8 @@ namespace Sitecron.Jobs.Publishing
             else
                 Log.Warn("SitePublishJob Execute - Target parameter missing", this);
 
-
-
             Log.Info("SitePublishJob Execute - End", this);
+            context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "SitePublishJob Execute - End"); 
         }
     }
 }

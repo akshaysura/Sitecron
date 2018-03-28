@@ -8,10 +8,12 @@ namespace Sitecron.SitecronSettings
         {
             public const string RootFolderID = "{C9ADDAE6-2298-49F2-8C9E-920A24D3D6D9}";
             public const string AutoFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
+            public const string SiteCronExecutionReportsFolderID = "{E62862B1-03DF-4752-A290-9B505806C515}";
         }
         public class Templates
         {
             public static ID SitecronJobTemplateID = new ID("{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}");
+            public static ID SiteCronExecutionReportTemplateID = new ID("{F8E58F37-9BF0-4B71-B562-4B21973CF6E7}");
         }
 
         public static class FieldNames
@@ -27,6 +29,9 @@ namespace Sitecron.SitecronSettings
             public const string NextRunUTC = "NextRunUTC";
             public const string ExecutionTime = "ExecutionTime";
             public const string LastRunLog = "LastRunLog";
+            public const string Log = "log";
+            public const string SitecronJob = "SitecronJob";
+            public const string NeverPublish = "__Never publish";
 
             //non sitecore related, used for internal storage
             public const string ItemID = "ItemID";
@@ -45,6 +50,9 @@ namespace Sitecron.SitecronSettings
             public const string zSiteCronItemID = "zSiteCronItemID";
             public const string SitecronJob = "SitecronJob";
             public const string Log4NetLogger = "SitecronLogger";
+            public const string SitecronJobLogData = "SitecronJobLogData";
+            public const string PSSitecronExecutionLog = "sitecronExecutionLog";
+            public const string Name = "Name";
         }
         public static class SettingsNames
         {

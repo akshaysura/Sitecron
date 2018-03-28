@@ -89,7 +89,6 @@
     <Compile Include="Core\Jobs\InheritingSitecronJobProvider.cs" />
     <Compile Include="Core\Jobs\ISitecronJobProvider.cs" />
     <Compile Include="Core\Jobs\ISitecronJobValidator.cs" />
-    <Compile Include="Core\Jobs\QueryJobProvider.cs" />
     <Compile Include="Core\Jobs\SitecronJob.cs" />
     <Compile Include="Core\Jobs\SitecronJobValidator.cs" />
     <Compile Include="Core\Pipelines\InitializeSitecron.cs" />

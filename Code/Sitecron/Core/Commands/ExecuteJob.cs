@@ -1,6 +1,7 @@
 ﻿using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecron.SitecronSettings;
@@ -14,11 +15,11 @@ namespace Sitecron.Core.Commands
             Assert.IsNotNull(context, "context");
             Assert.IsNotNull(context.Parameters["id"], "id");
 
-            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
+            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master");
             Database contextDb = Factory.GetDatabase(contextDbName);
 
             Item scriptItem = contextDb.GetItem(new ID(context.Parameters["id"]));
-            if (scriptItem != null && scriptItem.TemplateID == SitecronConstants.Templates.SitecronJobTemplateID)
+            if (scriptItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, scriptItem))
             {
                 string newItemName = ItemUtil.ProposeValidItemName(string.Concat("Execute Now ", scriptItem.Name, DateTime.Now.ToString(" yyyyMMddHHmmss")));
 
@@ -48,7 +49,7 @@ namespace Sitecron.Core.Commands
                 return CommandState.Hidden;
 
             Item currentItem = context.Items[0];
-            if (currentItem != null && currentItem.Template.ID.Equals(SitecronConstants.Templates.SitecronJobTemplateID))
+            if (currentItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, currentItem))
             {
                 return CommandState.Enabled;
             }

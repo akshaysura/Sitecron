@@ -76,8 +76,9 @@ namespace Sitecron.Core.Scheduling
             jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.ArchiveAfterExecution,
                 job.ArchiveAfterExecution ? "1" : "0");
             jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.ItemID, job.ItemId);
+            jobDetail.JobDataMap.Add(SitecronConstants.ParamNames.Name, job.Name);
             jobDetail.JobDataMap.Add(SitecronConstants.ParamNames.SitecronJob, job);
-
+            jobDetail.JobDataMap.Add(SitecronConstants.ParamNames.SitecronJobLogData, ""); //Parameter used to log execution reports
             return jobDetail;
         }
     }

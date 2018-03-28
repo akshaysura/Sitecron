@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 
 namespace Sitecron.Jobs.PowerShell
 {
@@ -23,7 +24,7 @@ namespace Sitecron.Jobs.PowerShell
             {
                 //get job parameters
                 JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
-                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB); //New setting to figure out what the context DB is - Check SiteCron config file
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master"); //New setting to figure out what the context DB is - Check SiteCron config file
 
                 string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items); //Get the items field value
                 string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.
@@ -43,7 +44,7 @@ namespace Sitecron.Jobs.PowerShell
 
                     NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters); //Use Sitecore WebUtil to parse the parameters
 
-                    Run(scriptItem, parameters);
+                    Run(scriptItem, parameters, context);
                 }
                 else
                     Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", this);
@@ -55,7 +56,7 @@ namespace Sitecron.Jobs.PowerShell
         }
 
         //This is where the PowerShell script is run. Its from SPE code.
-        private void Run(Item speScript, NameValueCollection parameters)
+        private void Run(Item speScript, NameValueCollection parameters, IJobExecutionContext context)
         {
             var script = speScript.Fields[Templates.Script.Fields.ScriptBody].Value ?? string.Empty;
             if (!string.IsNullOrEmpty(script))
@@ -82,6 +83,7 @@ namespace Sitecron.Jobs.PowerShell
 
                         session.SetExecutedScript(speScript);
                         session.ExecuteScriptPart(script);
+                        context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, session.GetVariable(SitecronConstants.ParamNames.PSSitecronExecutionLog)); //get the PowerShell session variable to use for the Execution Report
                     }
                 }
             }

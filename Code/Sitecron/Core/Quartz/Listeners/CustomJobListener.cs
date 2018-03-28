@@ -4,7 +4,9 @@ using Sitecore.Data;
 using Sitecore.Data.Archiving;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.SecurityModel;
 using Sitecron.SitecronSettings;
+using System;
 
 namespace Sitecron.Core.Quartz.Listeners
 {
@@ -45,7 +47,7 @@ namespace Sitecron.Core.Quartz.Listeners
 
             Log.Info(string.Format("Sitecron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), this);
 
-            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
+            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master");
             if (contextDbName != SitecronConstants.SitecoreDatabases.Master)
             {
                 Database contextDb = Factory.GetDatabase(contextDbName);
@@ -61,6 +63,10 @@ namespace Sitecron.Core.Quartz.Listeners
             if (masterDb != null)
             {
                 SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
+
+                //Only do it on master.
+                CreateExecutionReport(dataMap.GetString(SitecronConstants.ParamNames.Name), itemID, dataMap.GetString(SitecronConstants.ParamNames.SitecronJobLogData), context.FireTimeUtc.Value.DateTime.ToString());
+
                 if (archiveItem)
                     ArchiveItem(masterDb, itemID);
             }
@@ -71,7 +77,7 @@ namespace Sitecron.Core.Quartz.Listeners
             Item jobItem = db.GetItem(new ID(itemID));
             if (jobItem != null)
             {
-                using (new Sitecore.SecurityModel.SecurityDisabler())
+                using (new SecurityDisabler())
                 {
                     jobItem.Editing.BeginEdit();
                     {
@@ -83,12 +89,47 @@ namespace Sitecron.Core.Quartz.Listeners
                 }
             }
         }
+
+        private void CreateExecutionReport(string jobName, string itemID, string logData, string lastRunTime)
+        {
+            try
+            {
+                string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master");
+                Database contextDb = Factory.GetDatabase(contextDbName);
+
+                //The bucket is not publishable so it will stay only on the master. This way it will not cause any publishing delays.
+                Item executionReportFolderItem = contextDb.GetItem(new ID(SitecronConstants.ItemIds.SiteCronExecutionReportsFolderID));
+                if (executionReportFolderItem != null)
+                {
+                    string newItemName = ItemUtil.ProposeValidItemName(string.Concat(jobName, DateTime.Now.ToString(" yyyyMMddHHmmss")));
+
+                    using (new SecurityDisabler())
+                    {
+                        Item executionReport = executionReportFolderItem.Add(newItemName, new TemplateID(SitecronConstants.Templates.SiteCronExecutionReportTemplateID));
+                        if (executionReport != null)
+                        {
+                            executionReport.Editing.BeginEdit();
+                            {
+                                executionReport[SitecronConstants.FieldNames.LastRunUTC] = lastRunTime;
+                                executionReport[SitecronConstants.FieldNames.Log] = logData;
+                                executionReport[SitecronConstants.FieldNames.SitecronJob] = itemID;
+                            }
+                            executionReport.Editing.EndEdit();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Sitecron ERROR creating Execution report: " + ex.Message, ex, this);
+            }
+        }
         private void ArchiveItem(Database db, string itemID)
         {
             Item jobItem = db.GetItem(new ID(itemID));
             if (jobItem != null)
             {
-                using (new Sitecore.SecurityModel.SecurityDisabler())
+                using (new SecurityDisabler())
                 {
                     Archive archive = ArchiveManager.GetArchive("archive", jobItem.Database);
                     archive.ArchiveItem(jobItem);

@@ -9,6 +9,7 @@ namespace Sitecron.Jobs
         public void Execute(IJobExecutionContext context)
         {
             Log.Info("Sitecron - Hello World", this);
+            context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "Sitecron - Hello World");
         }
     }
 }
