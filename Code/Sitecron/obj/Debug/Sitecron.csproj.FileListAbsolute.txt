@@ -6,6 +6,7 @@ D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Quartz.dll
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Sitecore.Client.dll
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Sitecore.Kernel.dll
+D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Newtonsoft.Json.dll
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging.pdb
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging.xml
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Common.Logging.Core.pdb
@@ -14,4 +15,3 @@ D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Quartz.pdb
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Quartz.xml
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\obj\Debug\Sitecron.dll
 D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\obj\Debug\Sitecron.pdb
-D:\Akshay Shared\CloudStation\Git\SiteCron\Repo\Code\Sitecron\bin\Newtonsoft.Json.dll

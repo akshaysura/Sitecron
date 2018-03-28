@@ -1,5 +1,6 @@
 ﻿using Quartz;
 using Sitecore.Diagnostics;
+using Sitecron.SitecronSettings;
 
 namespace Sitecron.Jobs
 {
@@ -7,7 +8,7 @@ namespace Sitecron.Jobs
     {
         public void Execute(IJobExecutionContext context)
         {
-            Log.Info("Sitecron - Hello World", this);
+            Log.Info("Sitecron - Hello World", SitecronConstants.ParamNames.Log4NetLogger);
         }
     }
 }

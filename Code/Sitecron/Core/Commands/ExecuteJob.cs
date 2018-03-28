@@ -5,8 +5,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecron.SitecronSettings;
 using System;
-
-namespace Sitecron.Commands
+namespace Sitecron.Core.Commands
 {
     public class ExecuteJob : Command
     {
@@ -15,7 +14,7 @@ namespace Sitecron.Commands
             Assert.IsNotNull(context, "context");
             Assert.IsNotNull(context.Parameters["id"], "id");
 
-            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB); 
+            string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
             Database contextDb = Factory.GetDatabase(contextDbName);
 
             Item scriptItem = contextDb.GetItem(new ID(context.Parameters["id"]));

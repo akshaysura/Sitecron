@@ -4,7 +4,7 @@ using Sitecron.SitecronSettings;
 using System;
 using Sitecore.Data.Events;
 
-namespace Sitecron.Events
+namespace Sitecron.Core.Events
 {
     public class SitecronSavingHandler
     {

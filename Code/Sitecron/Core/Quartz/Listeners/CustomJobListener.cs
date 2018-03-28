@@ -6,7 +6,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecron.SitecronSettings;
 
-namespace Sitecron.Listeners
+namespace Sitecron.Core.Quartz.Listeners
 {
     public class CustomJobListener : IJobListener
     {
@@ -14,7 +14,7 @@ namespace Sitecron.Listeners
         {
             get
             {
-                return "CustomJobListener"; 
+                return "CustomJobListener";
             }
         }
 
@@ -26,7 +26,7 @@ namespace Sitecron.Listeners
         //runs before a job is executed 
         public void JobToBeExecuted(IJobExecutionContext context)
         {
-            Log.Info(string.Format("Sitecron - Job {0} in group {1} is about to be executed", context.JobDetail.Key.Name, context.JobDetail.Key.Group), this);
+            Log.Info(string.Format("Sitecron - Job {0} in group {1} is about to be executed", context.JobDetail.Key.Name, context.JobDetail.Key.Group), SitecronConstants.ParamNames.Log4NetLogger);
         }
 
         //runs after the job is executed
@@ -43,7 +43,7 @@ namespace Sitecron.Listeners
             if (string.IsNullOrEmpty(itemID))
                 return;
 
-            Log.Info(string.Format("Sitecron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), this);
+            Log.Info(string.Format("Sitecron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), SitecronConstants.ParamNames.Log4NetLogger);
 
             string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB);
             if (contextDbName != SitecronConstants.SitecoreDatabases.Master)
@@ -92,7 +92,7 @@ namespace Sitecron.Listeners
                 {
                     Archive archive = ArchiveManager.GetArchive("archive", jobItem.Database);
                     archive.ArchiveItem(jobItem);
-                    Log.Info(string.Format("Sitecron - Item Archived. (ItemID: {0} Archive:{1} DB: {2})", itemID, db.Name), this);
+                    Log.Info(string.Format("Sitecron - Item Archived. (ItemID: {0} DB: {1})", itemID, db.Name), SitecronConstants.ParamNames.Log4NetLogger);
                 }
             }
         }

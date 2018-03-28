@@ -12,7 +12,7 @@ namespace Sitecron.Jobs.Publishing
     {
         public void Execute(IJobExecutionContext context) //Implement the Execute method
         {
-            Log.Info("SitePublishJob Execute - Start", this);
+            Log.Info("SitePublishJob Execute - Start", SitecronConstants.ParamNames.Log4NetLogger);
 
             //get job parameters
             JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
@@ -29,11 +29,11 @@ namespace Sitecron.Jobs.Publishing
                 Sitecore.Publishing.PublishManager.PublishSmart(master, targetDBs, languages);
             }
             else
-                Log.Warn("SitePublishJob Execute - Target parameter missing", this);
+                Log.Warn("SitePublishJob Execute - Target parameter missing", SitecronConstants.ParamNames.Log4NetLogger);
 
 
 
-            Log.Info("SitePublishJob Execute - End", this);
+            Log.Info("SitePublishJob Execute - End", SitecronConstants.ParamNames.Log4NetLogger);
         }
     }
 }

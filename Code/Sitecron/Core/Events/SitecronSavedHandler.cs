@@ -7,13 +7,21 @@ using System.Reflection;
 using Sitecron.Extend;
 using Sitecore.Configuration;
 using Sitecore.Diagnostics;
-using Sitecore;
 using static Sitecron.SitecronSettings.SitecronConstants;
+using Sitecore.Data.Managers;
 
-namespace Sitecron.Events
+namespace Sitecron.Core.Events
 {
     public class SitecronSavedHandler
     {
+        private readonly IScheduleManager _scheduleManager;
+
+        public SitecronSavedHandler(IScheduleManager scheduleManager)
+        {
+            Assert.ArgumentNotNull(scheduleManager, nameof(scheduleManager));
+            _scheduleManager = scheduleManager;
+        }
+
         public void OnItemSaved(object sender, EventArgs args)
         {
             Item savedItem = null;
@@ -30,16 +38,16 @@ namespace Sitecron.Events
                 savedItem = Event.ExtractParameter(args, 0) as Item;
             }
 
-            if (savedItem != null && SitecronConstants.Templates.SitecronJobTemplateID == savedItem.TemplateID) //matched Sitecron job template
+            if (savedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savedItem))
             {
-                if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime))
+                if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
                 {
-                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
+                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", SitecronConstants.ParamNames.Log4NetLogger);
                 }
                 else
                 {
-                    ScheduleHelper scheduler = new ScheduleHelper();
-                    scheduler.InitializeScheduler();
+                    Log.Info("Sitecron based Item Saved/Created, reloading Jobs.", SitecronConstants.ParamNames.Log4NetLogger);
+                    _scheduleManager.ScheduleAllJobs();
                 }
             }
             else
@@ -66,7 +74,7 @@ namespace Sitecron.Events
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, this);
+                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, SitecronConstants.ParamNames.Log4NetLogger);
                 }
             }
         }

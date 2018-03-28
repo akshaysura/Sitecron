@@ -28,7 +28,7 @@ namespace Sitecron.Jobs.PowerShell
                 string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items); //Get the items field value
                 string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.
 
-                Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - {5}Parameters: {1} ScriptIDs: {2} {5}Fired at: {3} {5}Next Scheduled For:{4}", context.JobDetail.Key, rawParameters, scriptIDs, context.FireTimeUtc.Value.ToString("r"), context.NextFireTimeUtc.Value.ToString("r"), Environment.NewLine), this);
+                Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - Parameters: {1} ScriptIDs: {2}", context.JobDetail.Key, rawParameters, scriptIDs, Environment.NewLine), SitecronConstants.ParamNames.Log4NetLogger);
 
                 if (!string.IsNullOrEmpty(scriptIDs))
                 {
@@ -39,18 +39,18 @@ namespace Sitecron.Jobs.PowerShell
 
                     Item scriptItem = contextDb.GetItem(new ID(id));
 
-                    Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0} {1}", scriptItem.Name, id), this);
+                    Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0} {1}", scriptItem.Name, id), SitecronConstants.ParamNames.Log4NetLogger);
 
                     NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters); //Use Sitecore WebUtil to parse the parameters
 
                     Run(scriptItem, parameters);
                 }
                 else
-                    Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", this);
+                    Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", SitecronConstants.ParamNames.Log4NetLogger);
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron: Powershell.ExecuteScript: ERROR something went wrong - " + ex.Message, ex, this);
+                Log.Error("Sitecron: Powershell.ExecuteScript: ERROR something went wrong - " + ex.Message, ex, SitecronConstants.ParamNames.Log4NetLogger);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Sitecron.Jobs.PowerShell
             var script = speScript.Fields[Templates.Script.Fields.ScriptBody].Value ?? string.Empty;
             if (!string.IsNullOrEmpty(script))
             {
-                Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", speScript.Name, speScript.ID.ToString()), this);
+                Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", speScript.Name, speScript.ID.ToString()), SitecronConstants.ParamNames.Log4NetLogger);
 
                 if (speScript.IsPowerShellScript())
                 {
@@ -97,7 +97,7 @@ namespace Sitecron.Jobs.PowerShell
         ////    string scriptIDs = dataMap.GetString(FieldNames.Items);
         ////    string rawParameters = dataMap.GetString(FieldNames.Parameters);
 
-        ////    Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - {4}Parameters: {1} {4}Fired at: {2} {4}Next Scheduled For:{3}", context.JobDetail.Key, scriptParams, context.FireTimeUtc.Value.ToString("r"), context.NextFireTimeUtc.Value.ToString("r"), Environment.NewLine), this);
+        ////    Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - {4}Parameters: {1} {4}Fired at: {2} {4}Next Scheduled For:{3}", context.JobDetail.Key, scriptParams, context.FireTimeUtc.Value.ToString("r"), context.NextFireTimeUtc.Value.ToString("r"), Environment.NewLine), SitecronConstants.ParamNames.Log4NetLogger);
 
         ////    if (!string.IsNullOrEmpty(scriptIDs))
         ////    {
@@ -108,7 +108,7 @@ namespace Sitecron.Jobs.PowerShell
         ////        foreach (string id in ids)
         ////        {
         ////            scriptItems.Add(masterDb.GetItem(new ID(id)));
-        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0}", id), this);
+        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0}", id), SitecronConstants.ParamNames.Log4NetLogger);
         ////        }
 
         ////        NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters);
@@ -116,7 +116,7 @@ namespace Sitecron.Jobs.PowerShell
         ////        Run(scriptItems.ToArray(), parameters);
         ////    }
         ////    else
-        ////        Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", this);
+        ////        Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", SitecronConstants.ParamNames.Log4NetLogger);
         ////}
 
 
@@ -130,7 +130,7 @@ namespace Sitecron.Jobs.PowerShell
         ////        var script = item[ScriptItemFieldNames.Script];
         ////        if (!String.IsNullOrEmpty(script))
         ////        {
-        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", item.Name, item.ID.ToString()), this);
+        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", item.Name, item.ID.ToString()), SitecronConstants.ParamNames.Log4NetLogger);
 
         ////            //reset session for each script otherwise the position of the items and env vars set by the previous script will be inherited by the subsequent scripts
         ////            using (var session = ScriptSessionManager.NewSession(ApplicationNames.Default, true))
