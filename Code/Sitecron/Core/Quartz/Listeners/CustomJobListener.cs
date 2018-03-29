@@ -101,7 +101,7 @@ namespace Sitecron.Core.Quartz.Listeners
                 Item executionReportFolderItem = contextDb.GetItem(new ID(SitecronConstants.ItemIds.SiteCronExecutionReportsFolderID));
                 if (executionReportFolderItem != null)
                 {
-                    string newItemName = ItemUtil.ProposeValidItemName(string.Concat(jobName, DateTime.Now.ToString(" yyyyMMddHHmmss")));
+                    string newItemName = ItemUtil.ProposeValidItemName(string.Concat(jobName, DateTime.Now.ToString(" dddd MMMM dd yyyy HH mm ss ffff")));
 
                     using (new SecurityDisabler())
                     {
