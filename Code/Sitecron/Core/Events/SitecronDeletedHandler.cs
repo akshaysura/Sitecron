@@ -1,4 +1,5 @@
-﻿using Sitecore.Data.Items;
+﻿using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
@@ -20,7 +21,7 @@ namespace Sitecron.Core.Events
         {
             Item deletedItem = Event.ExtractParameter(args, 0) as Item;
 
-            if (deletedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, deletedItem))
+            if (deletedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, deletedItem) && !StandardValuesManager.IsStandardValuesHolder(deletedItem))
             {
                 Log.Info("Sitecron based Item Deleted/Archived, reloading Jobs.", this);
                 _scheduleManager.ScheduleAllJobs();

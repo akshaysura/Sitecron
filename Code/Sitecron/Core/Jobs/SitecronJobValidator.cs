@@ -38,6 +38,19 @@ namespace Sitecron.Core.Jobs
                 return false;
             }
 
+            //if its a Run As Sitecore Job, validate fields
+            if (job.TemplateId == SitecronConstants.Templates.SitecronRunAsSitecoreJobTemplateID && (string.IsNullOrEmpty(job.SitecoreJobCategory) || string.IsNullOrEmpty(job.SitecoreJobMethod) || string.IsNullOrEmpty(job.SitecoreJobName) || string.IsNullOrEmpty(job.SitecoreJobSiteName) || string.IsNullOrEmpty(job.SitecoreJobType) || string.IsNullOrEmpty(job.SitecoreJobPriority)))
+            {
+                Log.Info($"Sitecron - RunAsSitecoreJob - Job Not Loaded - Job Disabled: {job.Name} Type: {job.JobTypeSignature} Cron Expression: {job.CronExpression}", this);
+                return false;
+            }
+
+            //if its a SiteCron Sitecore Schedule Command Job, validate fields
+            if (job.TemplateId == SitecronConstants.Templates.SiteCronSitecoreScheduleCommandJobTemplateID && (string.IsNullOrEmpty(job.SitecoreJobCategory) || string.IsNullOrEmpty(job.SitecoreJobName) || string.IsNullOrEmpty(job.SitecoreJobSiteName) || string.IsNullOrEmpty(job.SitecoreJobPriority) || string.IsNullOrEmpty(job.SitecoreScheduleJob)))
+            {
+                Log.Info($"Sitecron - SiteCron Sitecore Schedule Command Job - Job Not Loaded - Job Disabled: {job.Name} Type: {job.JobTypeSignature} Cron Expression: {job.CronExpression}", this);
+                return false;
+            }
             return true;
         }
     }

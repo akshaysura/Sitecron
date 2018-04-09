@@ -4,6 +4,7 @@ using Sitecron.SitecronSettings;
 using System;
 using Sitecore.Data.Events;
 using Sitecore.Data.Managers;
+using Sitecore.Data;
 
 namespace Sitecron.Core.Events
 {
@@ -24,7 +25,7 @@ namespace Sitecron.Core.Events
                 savingItem = Event.ExtractParameter(args, 0) as Item;
             }
 
-            if (savingItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savingItem))
+            if (savingItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savingItem) && !StandardValuesManager.IsStandardValuesHolder(savingItem))
             {
                 string appendText = "";
                 string icon = "";

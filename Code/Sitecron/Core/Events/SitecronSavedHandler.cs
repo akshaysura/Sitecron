@@ -9,6 +9,7 @@ using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using static Sitecron.SitecronSettings.SitecronConstants;
 using Sitecore.Data.Managers;
+using Sitecore.Data;
 
 namespace Sitecron.Core.Events
 {
@@ -38,7 +39,7 @@ namespace Sitecron.Core.Events
                 savedItem = Event.ExtractParameter(args, 0) as Item;
             }
 
-            if (savedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savedItem))
+            if (savedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savedItem) && !StandardValuesManager.IsStandardValuesHolder(savedItem))
             {
                 if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
                 {

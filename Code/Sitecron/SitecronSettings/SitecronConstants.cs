@@ -14,11 +14,14 @@ namespace Sitecron.SitecronSettings
         {
             public static ID SitecronJobTemplateID = new ID("{7F2C8881-6AE4-48CF-A499-7745CC4B2EB2}");
             public static ID SiteCronExecutionReportTemplateID = new ID("{F8E58F37-9BF0-4B71-B562-4B21973CF6E7}");
+            public static ID SitecronRunAsSitecoreJobTemplateID = new ID("{49A27DC8-2A6A-48A2-A8EF-02A3DD0D3274}");
+            public static ID SiteCronSitecoreScheduleCommandJobTemplateID = new ID("{B9B437B2-789C-48F6-AAE2-B49C4AA2A4BB}");
         }
 
         public static class FieldNames
         {
             public const string Type = "Type";
+            public const string Method = "Method";
             public const string CronExpression = "CronExpression";
             public const string Parameters = "Parameters";
             public const string Items = "Items";
@@ -32,6 +35,14 @@ namespace Sitecron.SitecronSettings
             public const string Log = "log";
             public const string SitecronJob = "SitecronJob";
             public const string NeverPublish = "__Never publish";
+
+            public const string SitecoreJobType = "SitecoreJobType";
+            public const string SitecoreJobMethod = "SitecoreJobMethod";
+            public const string SitecoreJobName = "SitecoreJobName";
+            public const string SitecoreJobCategory = "SitecoreJobCategory";
+            public const string SitecoreJobSiteName = "SitecoreJobSiteName";
+            public const string SitecoreJobPriority = "SitecoreJobPriority";
+            public const string SitecoreScheduleJob = "SitecoreScheduleJob";
 
             //non sitecore related, used for internal storage
             public const string ItemID = "ItemID";

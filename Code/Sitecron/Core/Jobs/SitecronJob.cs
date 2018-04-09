@@ -2,6 +2,7 @@
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecron.SitecronSettings;
+using Sitecore.Data;
 
 namespace Sitecron.Core.Jobs
 {
@@ -11,7 +12,7 @@ namespace Sitecron.Core.Jobs
         private Type _type;
 
         public virtual string ItemId { get; set; }
-
+        public virtual ID TemplateId { get; set; }
         public virtual string Name { get; set; }
 
         public virtual string JobTypeSignature
@@ -62,5 +63,17 @@ namespace Sitecron.Core.Jobs
             return Factory.GetDatabase(Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master"))
                 ?.GetItem(ItemId);
         }
+
+        //Run as a Sitecore Job
+        public virtual string SitecoreJobType { get; set; }
+        public virtual string SitecoreJobMethod { get; set; }
+        public virtual string SitecoreJobName { get; set; }
+        public virtual string SitecoreJobCategory { get; set; }
+        public virtual string SitecoreJobSiteName { get; set; }
+        public virtual string SitecoreJobPriority { get; set; }
+
+        //Run a Sitecore Scheduled Job Command
+        public virtual string SitecoreScheduleJob { get; set; }
+
     }
 }

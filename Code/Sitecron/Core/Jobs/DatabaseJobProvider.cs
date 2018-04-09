@@ -29,9 +29,12 @@ namespace Sitecron.Core.Jobs
 
         protected virtual SitecronJob CreateSitecronJob(Item jobItem)
         {
+            int jobPriority = 0;
+
             return new SitecronJob
             {
                 ItemId = jobItem.ID.ToString(),
+                TemplateId = jobItem.TemplateID,
                 Name = jobItem.Name,
                 JobTypeSignature = jobItem[SitecronConstants.FieldNames.Type],
                 CronExpression = jobItem[SitecronConstants.FieldNames.CronExpression],
@@ -43,7 +46,14 @@ namespace Sitecron.Core.Jobs
                 LastRunUTC = jobItem[SitecronConstants.FieldNames.LastRunUTC],
                 NextRunUTC = jobItem[SitecronConstants.FieldNames.NextRunUTC],
                 ExecutionTime = jobItem[SitecronConstants.FieldNames.ExecutionTime],
-                LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunUTC]
+                LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunUTC],
+                SitecoreJobType = jobItem[SitecronConstants.FieldNames.SitecoreJobType],
+                SitecoreJobMethod = jobItem[SitecronConstants.FieldNames.SitecoreJobMethod],
+                SitecoreJobName = jobItem[SitecronConstants.FieldNames.SitecoreJobName],
+                SitecoreJobCategory = jobItem[SitecronConstants.FieldNames.SitecoreJobCategory],
+                SitecoreJobSiteName = jobItem[SitecronConstants.FieldNames.SitecoreJobSiteName],
+                SitecoreJobPriority = jobItem[SitecronConstants.FieldNames.SitecoreJobPriority],
+                SitecoreScheduleJob = jobItem[SitecronConstants.FieldNames.SitecoreScheduleJob]
             };
         }
 

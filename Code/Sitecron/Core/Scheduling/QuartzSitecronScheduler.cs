@@ -37,13 +37,18 @@ namespace Sitecron.Core.Scheduling
 
             if (!string.IsNullOrEmpty(job.CronExpression))
             {
-                Log.Info($"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
-                var trigger = TriggerBuilder.Create()
-                    .WithIdentity(job.ItemId)
-                    .WithCronSchedule(job.CronExpression)
-                    .ForJob(jobDetail)
-                    .Build();
-                Scheduler.ScheduleJob(jobDetail, trigger);
+                if (CronExpression.IsValidExpression(job.CronExpression))
+                {
+                    Log.Info($"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
+                    var trigger = TriggerBuilder.Create()
+                        .WithIdentity(job.ItemId)
+                        .WithCronSchedule(job.CronExpression)
+                        .ForJob(jobDetail)
+                        .Build();
+                    Scheduler.ScheduleJob(jobDetail, trigger);
+                }
+                else
+                    Log.Info($"Sitecron - Job NOT Loaded - Invalid CRON Expression - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
             }
 
             if (job.ExecuteExactlyAtDateTime.Value != DateTime.MinValue)

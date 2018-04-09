@@ -100,10 +100,13 @@
     <Compile Include="Core\Events\SitecronDeletedHandler.cs" />
     <Compile Include="Core\Events\SitecronSavingHandler.cs" />
     <Compile Include="Core\Events\SitecronSavedHandler.cs" />
+    <Compile Include="Demo\Jobs\DummyJob.cs" />
     <Compile Include="Extend\ISavedHandler.cs" />
     <Compile Include="Jobs\HelloWorld.cs" />
     <Compile Include="Jobs\PowerShell\ExecuteScript.cs" />
     <Compile Include="Jobs\Publishing\SmartPublish.cs" />
+    <Compile Include="Jobs\SitecoreJob\RunAsSitecoreJob.cs" />
+    <Compile Include="Jobs\SitecoreJob\SitecoreScheduleCommandJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecronSettings\SitecronConstants.cs" />
   </ItemGroup>
