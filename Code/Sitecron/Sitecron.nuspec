@@ -11,8 +11,8 @@
     <iconUrl>https://avatars0.githubusercontent.com/u/11164912</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>SiteCron module provides an advanced way to run Cron based scheduling jobs using Sitecore and Quartz Scheduler. It uses the CronTrigger functionality to help you schedule simple to complex jobs.</description>
-    <releaseNotes>Bug fixes, Archive after Execute and disabled flag.</releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <releaseNotes>Bug fixes and Enhancements.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
     <tags>sitecore sitecron cronscheduler</tags>
   </metadata>
   <files>
