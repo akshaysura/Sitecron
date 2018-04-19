@@ -11,6 +11,7 @@ namespace Sitecron.Core.Jobs
         private string _typeSignature;
         private Type _type;
 
+        public virtual string JobSource { get; set; }
         public virtual string ItemId { get; set; }
         public virtual ID TemplateId { get; set; }
         public virtual string Name { get; set; }

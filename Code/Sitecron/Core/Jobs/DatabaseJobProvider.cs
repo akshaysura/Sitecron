@@ -36,6 +36,7 @@ namespace Sitecron.Core.Jobs
                 ItemId = jobItem.ID.ToString(),
                 TemplateId = jobItem.TemplateID,
                 Name = jobItem.Name,
+                JobSource = "DATABASE",
                 JobTypeSignature = jobItem[SitecronConstants.FieldNames.Type],
                 CronExpression = jobItem[SitecronConstants.FieldNames.CronExpression],
                 Parameters = jobItem[SitecronConstants.FieldNames.Parameters],

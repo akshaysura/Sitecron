@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecron</RootNamespace>
-    <AssemblyName>Sitecron</AssemblyName>
+    <AssemblyName>SiteCron</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -86,9 +86,12 @@
     <Compile Include="Core\DefaultScheduleManager.cs" />
     <Compile Include="Core\IScheduleManager.cs" />
     <Compile Include="Core\Jobs\DatabaseJobProvider.cs" />
+    <Compile Include="Core\Jobs\ConfigJobProvider.cs" />
+    <Compile Include="Core\Jobs\DBAndConfigJobProvider.cs" />
     <Compile Include="Core\Jobs\InheritingSitecronJobProvider.cs" />
     <Compile Include="Core\Jobs\ISitecronJobProvider.cs" />
     <Compile Include="Core\Jobs\ISitecronJobValidator.cs" />
+    <Compile Include="Core\Jobs\Loader\ConfigJobLoader.cs" />
     <Compile Include="Core\Jobs\SitecronJob.cs" />
     <Compile Include="Core\Jobs\SitecronJobValidator.cs" />
     <Compile Include="Core\Pipelines\InitializeSitecron.cs" />
@@ -111,10 +114,15 @@
     <Compile Include="SitecronSettings\SitecronConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\Sitecron\Sitecron.config" />
+    <Content Include="App_Config\Include\SiteCron\SiteCron.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Config\Include\SiteCron\SiteCronJobs.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="job_scheduling_data_2_0.xsd">

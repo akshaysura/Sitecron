@@ -39,7 +39,7 @@ namespace Sitecron.Core.Scheduling
             {
                 if (CronExpression.IsValidExpression(job.CronExpression))
                 {
-                    Log.Info($"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
+                    Log.Info($"Sitecron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
                     var trigger = TriggerBuilder.Create()
                         .WithIdentity(job.ItemId)
                         .WithCronSchedule(job.CronExpression)
@@ -48,13 +48,13 @@ namespace Sitecron.Core.Scheduling
                     Scheduler.ScheduleJob(jobDetail, trigger);
                 }
                 else
-                    Log.Info($"Sitecron - Job NOT Loaded - Invalid CRON Expression - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
+                    Log.Info($"Sitecron - Job NOT Loaded - Invalid CRON Expression - Job Source: {job.JobSource} - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
             }
 
             if (job.ExecuteExactlyAtDateTime.Value != DateTime.MinValue)
             {
                 Log.Info(
-                    $"Sitecron - Job Loaded - {job.Name} Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} Parameters: {job.Parameters}", this);
+                    $"Sitecron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} Parameters: {job.Parameters}", this);
                 var startDateTime =
                     new DateTimeOffset(job.ExecuteExactlyAtDateTime.Value.ToUniversalTime());
                 var trigger = TriggerBuilder.Create()
