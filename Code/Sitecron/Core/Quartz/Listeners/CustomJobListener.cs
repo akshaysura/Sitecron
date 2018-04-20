@@ -36,14 +36,18 @@ namespace Sitecron.Core.Quartz.Listeners
         {
             JobDataMap dataMap = context.JobDetail.JobDataMap;
 
-            string itemID = dataMap.GetString(SitecronConstants.FieldNames.ItemID);
+            string id = dataMap.GetString(SitecronConstants.FieldNames.ItemID);
             bool archiveItem = false;
 
             if (!string.IsNullOrEmpty(dataMap.GetString(SitecronConstants.FieldNames.ArchiveAfterExecution)) && dataMap.GetString(SitecronConstants.FieldNames.ArchiveAfterExecution) == "1")
                 archiveItem = true;
 
-            if (string.IsNullOrEmpty(itemID))
+            if (string.IsNullOrEmpty(id))
                 return;
+
+            ID itemID;
+            if (!ID.TryParse(id, out itemID))
+                itemID = ID.Null;
 
             Log.Info(string.Format("Sitecron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), this);
 
@@ -72,25 +76,28 @@ namespace Sitecron.Core.Quartz.Listeners
             }
         }
 
-        private void SetItemStats(Database db, string itemID, string lastRunTime, string nextRunTime, string executionTime)
+        private void SetItemStats(Database db, ID itemID, string lastRunTime, string nextRunTime, string executionTime)
         {
-            Item jobItem = db.GetItem(new ID(itemID));
-            if (jobItem != null)
+            if (!ID.IsNullOrEmpty(itemID))
             {
-                using (new SecurityDisabler())
+                Item jobItem = db.GetItem(itemID);
+                if (jobItem != null)
                 {
-                    jobItem.Editing.BeginEdit();
+                    using (new SecurityDisabler())
                     {
-                        jobItem[SitecronConstants.FieldNames.LastRunUTC] = lastRunTime;
-                        jobItem[SitecronConstants.FieldNames.NextRunUTC] = nextRunTime;
-                        jobItem[SitecronConstants.FieldNames.ExecutionTime] = executionTime;
+                        jobItem.Editing.BeginEdit();
+                        {
+                            jobItem[SitecronConstants.FieldNames.LastRunUTC] = lastRunTime;
+                            jobItem[SitecronConstants.FieldNames.NextRunUTC] = nextRunTime;
+                            jobItem[SitecronConstants.FieldNames.ExecutionTime] = executionTime;
+                        }
+                        jobItem.Editing.EndEdit();
                     }
-                    jobItem.Editing.EndEdit();
                 }
             }
         }
 
-        private void CreateExecutionReport(string jobName, string itemID, string logData, string lastRunTime)
+        private void CreateExecutionReport(string jobName, ID itemID, string logData, string lastRunTime)
         {
             try
             {
@@ -112,7 +119,8 @@ namespace Sitecron.Core.Quartz.Listeners
                             {
                                 executionReport[SitecronConstants.FieldNames.LastRunUTC] = lastRunTime;
                                 executionReport[SitecronConstants.FieldNames.Log] = logData;
-                                executionReport[SitecronConstants.FieldNames.SitecronJob] = itemID;
+                                if (!ID.IsNullOrEmpty(itemID))
+                                    executionReport[SitecronConstants.FieldNames.SitecronJob] = itemID.ToString();
                             }
                             executionReport.Editing.EndEdit();
                         }
@@ -124,9 +132,9 @@ namespace Sitecron.Core.Quartz.Listeners
                 Log.Error("Sitecron ERROR creating Execution report: " + ex.Message, ex, this);
             }
         }
-        private void ArchiveItem(Database db, string itemID)
+        private void ArchiveItem(Database db, ID itemID)
         {
-            Item jobItem = db.GetItem(new ID(itemID));
+            Item jobItem = db.GetItem(itemID);
             if (jobItem != null)
             {
                 using (new SecurityDisabler())

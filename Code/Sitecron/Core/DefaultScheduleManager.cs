@@ -4,6 +4,7 @@ using Sitecore.Diagnostics;
 using Sitecron.Core.Jobs;
 using Sitecron.Core.Scheduling;
 using Sitecron.SitecronSettings;
+using System.Reflection;
 
 namespace Sitecron.Core
 {
@@ -36,7 +37,7 @@ namespace Sitecron.Core
 
             try
             {
-                Log.Info("Initialize Sitecron", this);
+                Log.Info("Initialize Sitecron: " + Assembly.GetExecutingAssembly().GetName().Version, this);
                 _scheduler.ClearJobs();
 
                 Log.Info("Loading Sitecron Jobs", this);
