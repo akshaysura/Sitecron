@@ -69,7 +69,7 @@ namespace Sitecron.Core.Scheduling
         protected IJobDetail CreateJobDetail(SitecronJob job)
         {
             var jobDetail = JobBuilder.Create(job.JobType).Build();
-            var jobParams = string.IsNullOrEmpty(job.Parameters) ? job.Parameters + "&" : string.Empty;
+            var jobParams = !string.IsNullOrEmpty(job.Parameters) ? job.Parameters + "&" : string.Empty;
             jobParams += $"{SitecronConstants.ParamNames.zSiteCronItemID}={job.ItemId}";
             jobDetail.JobDataMap.Add(SitecronConstants.FieldNames.Parameters, jobParams);
 
