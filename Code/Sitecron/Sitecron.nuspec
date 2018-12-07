@@ -18,5 +18,7 @@
   <files>
   <file src="..\..\Package\SiteCron Items Only Sitecore Package.zip" target="content\SitecorePackage" /> 
   <file src="..\..\Package\SiteCron FULL Sitecore Package.zip" target="content\SitecorePackage" /> 
+  <file src="..\..\Package\Konabos.Minions.RunMinion.dll" target="content\SitecorePackage" /> 
+  <file src="..\..\Package\Konabos.Minions.RunMinion.Help.txt" target="content\SitecorePackage" />   
 </files>
 </package>

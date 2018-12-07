@@ -51,7 +51,9 @@ namespace Sitecron.Core.Jobs.Loader
                 SitecoreJobCategory = Sitecore.Xml.XmlUtil.GetChildValue("sitecoreJobCategory", node),
                 SitecoreJobSiteName = Sitecore.Xml.XmlUtil.GetChildValue("sitecoreJobSiteName", node),
                 SitecoreJobPriority = Sitecore.Xml.XmlUtil.GetChildValue("sitecoreJobPriority", node),
-                SitecoreScheduleJob = Sitecore.Xml.XmlUtil.GetChildValue("sitecoreScheduleJob", node)
+                SitecoreScheduleJob = Sitecore.Xml.XmlUtil.GetChildValue("sitecoreScheduleJob", node),
+                MinionFullName = Sitecore.Xml.XmlUtil.GetChildValue("minionFullName", node),
+                EnvironmentName = Sitecore.Xml.XmlUtil.GetChildValue("environmentName", node)
             };
         }
     }

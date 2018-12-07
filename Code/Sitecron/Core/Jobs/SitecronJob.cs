@@ -76,5 +76,10 @@ namespace Sitecron.Core.Jobs
         //Run a Sitecore Scheduled Job Command
         public virtual string SitecoreScheduleJob { get; set; }
 
+        //Run Minion
+        public virtual string MinionFullName { get; set; }
+        public virtual string EnvironmentName { get; set; }
+        
+
     }
 }

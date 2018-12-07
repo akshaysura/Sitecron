@@ -48,6 +48,17 @@ namespace Sitecron.Core.Commands
             if (context.Items.Length != 1)
                 return CommandState.Hidden;
 
+            var publishingInstance = Settings.Publishing.PublishingInstance;
+            var instanceName = Settings.InstanceName.ToLower();
+
+            if (!string.IsNullOrEmpty(publishingInstance) &&
+            !string.IsNullOrEmpty(instanceName) &&
+            !publishingInstance.Equals(instanceName, StringComparison.OrdinalIgnoreCase))
+            {
+                Log.Info($"Sitecron - Hide execute now, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
+                return CommandState.Hidden;
+            }
+
             Item currentItem = context.Items[0];
             if (currentItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, currentItem))
             {

@@ -29,8 +29,6 @@ namespace Sitecron.Core.Jobs
 
         protected virtual SitecronJob CreateSitecronJob(Item jobItem)
         {
-            int jobPriority = 0;
-
             return new SitecronJob
             {
                 ItemId = jobItem.ID.ToString(),
@@ -54,7 +52,9 @@ namespace Sitecron.Core.Jobs
                 SitecoreJobCategory = jobItem[SitecronConstants.FieldNames.SitecoreJobCategory],
                 SitecoreJobSiteName = jobItem[SitecronConstants.FieldNames.SitecoreJobSiteName],
                 SitecoreJobPriority = jobItem[SitecronConstants.FieldNames.SitecoreJobPriority],
-                SitecoreScheduleJob = jobItem[SitecronConstants.FieldNames.SitecoreScheduleJob]
+                SitecoreScheduleJob = jobItem[SitecronConstants.FieldNames.SitecoreScheduleJob],
+                MinionFullName = jobItem[SitecronConstants.FieldNames.MinionFullName],
+                EnvironmentName = jobItem[SitecronConstants.FieldNames.EnvironmentName]
             };
         }
 

@@ -7,9 +7,11 @@ namespace Sitecron.Custom.Publishing
     {
         public void OnItemSaved(object sender, EventArgs args)
         {
-            string whyCantYouBeMyFriend = "";
-
             /*
+             * 
+             * string whyCantYouBeMyFriend = "";
+             * 
+             * 
              __   __  ___   _______  __   __  ___      __   __    _______  __   __  _______  _______  ______    ___   __   __  _______  __    _  _______  _______  ___     
             |  | |  ||   | |       ||  | |  ||   |    |  | |  |  |       ||  |_|  ||       ||       ||    _ |  |   | |  |_|  ||       ||  |  | ||       ||   _   ||   |    
             |  |_|  ||   | |    ___||  |_|  ||   |    |  |_|  |  |    ___||       ||    _  ||    ___||   | ||  |   | |       ||    ___||   |_| ||_     _||  |_|  ||   |    

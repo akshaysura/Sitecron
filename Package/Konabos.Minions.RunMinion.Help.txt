@@ -1,0 +1,3 @@
+Konabos.Minions.RunMinion.dll is based on XC 9.0.2.
+Include Konabos.Minions.RunMinion.dll as part of your commerce deployment.
+There is a sample job which shows you how to run a minion on a schedule in the SiteCron source on GitHub.

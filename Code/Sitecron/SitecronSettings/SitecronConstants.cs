@@ -44,6 +44,9 @@ namespace Sitecron.SitecronSettings
             public const string SitecoreJobPriority = "SitecoreJobPriority";
             public const string SitecoreScheduleJob = "SitecoreScheduleJob";
 
+            public const string MinionFullName = "MinionFullName";
+            public const string EnvironmentName = "EnvironmentName";
+
             //non sitecore related, used for internal storage
             public const string ItemID = "ItemID";
         }
@@ -70,6 +73,8 @@ namespace Sitecron.SitecronSettings
             public const string SiteCronContextDB = "SiteCronContextDB";
             public const string SiteCronExecuteNowSeconds = "SiteCronExecuteNowSeconds";
             public const string SiteCronSavedHandlerType = "SiteCron.SavedHandlerType";
+            public const string SiteCronValidTemplates = "SiteCron.ValidTemplates";
+            public const string SiteCronGetItemsIndex = "SiteCron.GetItemIndex";
         }
         public static class Queries
         {
