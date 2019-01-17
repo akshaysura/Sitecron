@@ -22,12 +22,29 @@ namespace Sitecron.Core.Jobs
         protected override IEnumerable<Item> GetJobItems()
         {
             List<Item> siteCronItems = new List<Item>();
+
+            siteCronItems = GetSolrJobs();
+            if (!siteCronItems.Any())
+            {
+                //ERROR: There is no method 'GetResults' on type 'Sitecore.ContentSearch.Linq.QueryableExtensions'
+                Log.Warn("Sitecron InheritingSitecronJobProvider got no results. Trying again assuming its Solr Initialization issue.", this);
+                //might be caused due to solr not initializing
+                System.Threading.Thread.Sleep(3000);
+                siteCronItems = GetSolrJobs();
+            }
+
+            return siteCronItems;
+        }
+
+        private List<Item> GetSolrJobs()
+        {
+            List<Item> siteCronItems = new List<Item>();
             try
             {
                 var folder = ContextDatabase?.GetItem(new ID(SitecronConstants.ItemIds.RootFolderID));
                 if (folder == null)
                 {
-                    return Enumerable.Empty<Item>();
+                    return siteCronItems;
                 }
                 List<ID> validTemplates = new List<ID>();
                 string[] configSiteCronTemplates = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronValidTemplates, "").Trim().Replace(" ", "").Split(new char[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);

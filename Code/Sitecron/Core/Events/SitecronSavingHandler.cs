@@ -27,18 +27,22 @@ namespace Sitecron.Core.Events
 
             if (savingItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savingItem) && !StandardValuesManager.IsStandardValuesHolder(savingItem))
             {
-                string appendText = "";
-                string icon = "";
-                if (savingItem.Fields[SitecronConstants.FieldNames.Disable].Value == "1")
+                Item existingItem = savingItem.Database.GetItem(savingItem.ID, savingItem.Language, savingItem.Version);
+                if (existingItem.Fields[SitecronConstants.FieldNames.Disable].Value != savingItem.Fields[SitecronConstants.FieldNames.Disable].Value)
                 {
-                    appendText = " _DISABLED_";
-                    icon = "Applications/32x32/gears_stop.png";
-                }
-                else
-                    icon = "Applications/32x32/gears.png";
+                    string appendText = "";
+                    string icon = "";
+                    if (savingItem.Fields[SitecronConstants.FieldNames.Disable].Value == "1")
+                    {
+                        appendText = " _DISABLED_";
+                        icon = "Applications/32x32/gears_stop.png";
+                    }
+                    else
+                        icon = "Applications/32x32/gears.png";
 
-                savingItem.Appearance.Icon = icon;
-                savingItem.Appearance.DisplayName = string.Concat(savingItem.Name, appendText);
+                    savingItem.Appearance.Icon = icon;
+                    savingItem.Appearance.DisplayName = string.Concat(savingItem.Name, appendText);
+                }
             }
         }
     }

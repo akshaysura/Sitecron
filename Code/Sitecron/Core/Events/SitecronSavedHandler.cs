@@ -41,14 +41,14 @@ namespace Sitecron.Core.Events
 
             if (savedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savedItem) && !StandardValuesManager.IsStandardValuesHolder(savedItem))
             {
-                if (savedItemChanges != null && savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
+                if (savedItemChanges != null && !savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
                 {
-                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
+                    Log.Info($"Sitecron based Item Saved/Created, reloading Jobs. {savedItem.Name} - {savedItem.ID.ToString()}", this);
+                    _scheduleManager.ScheduleAllJobs();
                 }
                 else
                 {
-                    Log.Info("Sitecron based Item Saved/Created, reloading Jobs.", this);
-                    _scheduleManager.ScheduleAllJobs();
+                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
                 }
             }
             else
