@@ -8,6 +8,11 @@ namespace Sitecron.Core.Jobs
     {
         public bool IsValid(SitecronJob job)
         {
+            if (job == null)
+            {
+                return false;
+            }
+
             if (job.JobType == null)
             {
                 Log.Info($"Sitecron - Job Not Loaded - Could not load type '{job.JobTypeSignature}' for job - Job Source: {job.JobSource} - {job.Name} - {job.ItemId}", this);

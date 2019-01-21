@@ -29,35 +29,38 @@ namespace Sitecron.Core.Jobs
 
         protected virtual SitecronJob CreateSitecronJob(Item jobItem)
         {
-            return new SitecronJob
-            {
-                ItemId = jobItem.ID.ToString(),
-                TemplateId = jobItem.TemplateID,
-                Name = jobItem.Name,
-                JobSource = "DATABASE",
-                JobTypeSignature = jobItem[SitecronConstants.FieldNames.Type],
-                CronExpression = jobItem[SitecronConstants.FieldNames.CronExpression],
-                Parameters = jobItem[SitecronConstants.FieldNames.Parameters],
-                Items = jobItem[SitecronConstants.FieldNames.Items],
-                Disable = jobItem[SitecronConstants.FieldNames.Disable] == "1",
-                ArchiveAfterExecution = jobItem[SitecronConstants.FieldNames.ArchiveAfterExecution] == "1",
-                ExecuteExactlyAtDateTime = new DateField(jobItem.Fields[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]).DateTime,
-                LastRunUTC = jobItem[SitecronConstants.FieldNames.LastRunUTC],
-                NextRunUTC = jobItem[SitecronConstants.FieldNames.NextRunUTC],
-                ExecutionTime = jobItem[SitecronConstants.FieldNames.ExecutionTime],
-                LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunUTC],
-                SitecoreJobType = jobItem[SitecronConstants.FieldNames.SitecoreJobType],
-                SitecoreJobMethod = jobItem[SitecronConstants.FieldNames.SitecoreJobMethod],
-                SitecoreJobName = jobItem[SitecronConstants.FieldNames.SitecoreJobName],
-                SitecoreJobCategory = jobItem[SitecronConstants.FieldNames.SitecoreJobCategory],
-                SitecoreJobSiteName = jobItem[SitecronConstants.FieldNames.SitecoreJobSiteName],
-                SitecoreJobPriority = jobItem[SitecronConstants.FieldNames.SitecoreJobPriority],
-                SitecoreScheduleJob = jobItem[SitecronConstants.FieldNames.SitecoreScheduleJob],
-                MinionFullName = jobItem[SitecronConstants.FieldNames.MinionFullName],
-                EnvironmentName = jobItem[SitecronConstants.FieldNames.EnvironmentName]
-            };
+            if (jobItem == null)
+                return null;
+
+            var siteCronJob = new SitecronJob();
+            siteCronJob.ItemId = jobItem.ID.ToString();
+            siteCronJob.TemplateId = jobItem.TemplateID;
+            siteCronJob.Name = jobItem.Name;
+            siteCronJob.JobSource = "DATABASE";
+            siteCronJob.JobTypeSignature = jobItem[SitecronConstants.FieldNames.Type];
+            siteCronJob.CronExpression = jobItem[SitecronConstants.FieldNames.CronExpression];
+            siteCronJob.Parameters = jobItem[SitecronConstants.FieldNames.Parameters];
+            siteCronJob.Items = jobItem[SitecronConstants.FieldNames.Items];
+            siteCronJob.Disable = jobItem[SitecronConstants.FieldNames.Disable] == "1";
+            siteCronJob.ArchiveAfterExecution = jobItem[SitecronConstants.FieldNames.ArchiveAfterExecution] == "1";
+            siteCronJob.ExecuteExactlyAtDateTime = new DateField(jobItem.Fields[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime]).DateTime;
+            siteCronJob.LastRunUTC = jobItem[SitecronConstants.FieldNames.LastRunUTC];
+            siteCronJob.NextRunUTC = jobItem[SitecronConstants.FieldNames.NextRunUTC];
+            siteCronJob.ExecutionTime = jobItem[SitecronConstants.FieldNames.ExecutionTime];
+            siteCronJob.LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunUTC];
+            siteCronJob.SitecoreJobType = jobItem[SitecronConstants.FieldNames.SitecoreJobType];
+            siteCronJob.SitecoreJobMethod = jobItem[SitecronConstants.FieldNames.SitecoreJobMethod];
+            siteCronJob.SitecoreJobName = jobItem[SitecronConstants.FieldNames.SitecoreJobName];
+            siteCronJob.SitecoreJobCategory = jobItem[SitecronConstants.FieldNames.SitecoreJobCategory];
+            siteCronJob.SitecoreJobSiteName = jobItem[SitecronConstants.FieldNames.SitecoreJobSiteName];
+            siteCronJob.SitecoreJobPriority = jobItem[SitecronConstants.FieldNames.SitecoreJobPriority];
+            siteCronJob.SitecoreScheduleJob = jobItem[SitecronConstants.FieldNames.SitecoreScheduleJob];
+            siteCronJob.MinionFullName = jobItem[SitecronConstants.FieldNames.MinionFullName];
+            siteCronJob.EnvironmentName = jobItem[SitecronConstants.FieldNames.EnvironmentName];
+            return siteCronJob;
         }
 
         protected abstract IEnumerable<Item> GetJobItems();
+        protected abstract IEnumerable<Item> GetJobItems(ID rootFolderId);
     }
 }

@@ -6,8 +6,8 @@ namespace Sitecron.SitecronSettings
     {
         public class ItemIds
         {
-            public const string RootFolderID = "{C9ADDAE6-2298-49F2-8C9E-920A24D3D6D9}";
-            public const string AutoFolderID = "{462CF67D-13C6-4E28-B0AE-709E29E01A71}";
+            public static ID RootFolderID = new ID("{C9ADDAE6-2298-49F2-8C9E-920A24D3D6D9}");
+            public static ID AutoFolderID = new ID("{462CF67D-13C6-4E28-B0AE-709E29E01A71}");
             public const string SiteCronExecutionReportsFolderID = "{E62862B1-03DF-4752-A290-9B505806C515}";
         }
         public class Templates
