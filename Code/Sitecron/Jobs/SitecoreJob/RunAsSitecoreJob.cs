@@ -43,7 +43,7 @@ namespace Sitecron.Jobs.SitecoreJob
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron: RunAsSitecoreJob: ERROR something went wrong - " + ex.Message, ex, this);
+                Log.Error("SiteCron: RunAsSitecoreJob: ERROR something went wrong - " + ex.Message, ex, this);
                 context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "Sitecron: RunAsSitecoreJob: ERROR something went wrong - " + ex.Message);
             }
         }

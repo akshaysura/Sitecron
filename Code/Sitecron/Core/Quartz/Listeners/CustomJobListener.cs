@@ -28,7 +28,7 @@ namespace Sitecron.Core.Quartz.Listeners
         //runs before a job is executed 
         public void JobToBeExecuted(IJobExecutionContext context)
         {
-            Log.Info(string.Format("Sitecron - Job {0} in group {1} is about to be executed", context.JobDetail.Key.Name, context.JobDetail.Key.Group), this);
+            Log.Info(string.Format("SiteCron - Job {0} in group {1} is about to be executed", context.JobDetail.Key.Name, context.JobDetail.Key.Group), this);
         }
 
         //runs after the job is executed
@@ -49,7 +49,7 @@ namespace Sitecron.Core.Quartz.Listeners
             if (!ID.TryParse(id, out itemID))
                 itemID = ID.Null;
 
-            Log.Info(string.Format("Sitecron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), this);
+            Log.Info(string.Format("SiteCron - Job {0} in group {1} was executed in {4}. (ItemID: {2} Archive:{3})", context.JobDetail.Key.Name, context.JobDetail.Key.Group, itemID, archiveItem.ToString(), context.JobRunTime.TotalSeconds.ToString()), this);
 
             string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master");
             if (contextDbName != SitecronConstants.SitecoreDatabases.Master)
@@ -66,7 +66,7 @@ namespace Sitecron.Core.Quartz.Listeners
             Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
             if (masterDb != null)
             {
-                SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
+                SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.HasValue? context.NextFireTimeUtc.Value.DateTime.ToString():string.Empty, context.JobRunTime.TotalSeconds.ToString());
 
                 //Only do it on master.
                 CreateExecutionReport(dataMap.GetString(SitecronConstants.ParamNames.Name), itemID, dataMap.GetString(SitecronConstants.ParamNames.SitecronJobLogData), context.FireTimeUtc.Value.DateTime.ToString());
@@ -129,7 +129,7 @@ namespace Sitecron.Core.Quartz.Listeners
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron ERROR creating Execution report: " + ex.Message, ex, this);
+                Log.Error("SiteCron ERROR creating Execution report: " + ex.Message, ex, this);
             }
         }
         private void ArchiveItem(Database db, ID itemID)
@@ -141,7 +141,7 @@ namespace Sitecron.Core.Quartz.Listeners
                 {
                     Archive archive = ArchiveManager.GetArchive("archive", jobItem.Database);
                     archive.ArchiveItem(jobItem);
-                    Log.Info(string.Format("Sitecron - Item Archived. (ItemID: {0} DB: {1})", itemID, db.Name), this);
+                    Log.Info(string.Format("SiteCron - Item Archived. (ItemID: {0} DB: {1})", itemID, db.Name), this);
                 }
             }
         }

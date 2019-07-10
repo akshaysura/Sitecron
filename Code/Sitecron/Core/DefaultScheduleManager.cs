@@ -31,16 +31,16 @@ namespace Sitecron.Core
                 !string.IsNullOrEmpty(instanceName) &&
                 !publishingInstance.Equals(instanceName, StringComparison.OrdinalIgnoreCase))
             {
-                Log.Info($"Sitecron - Exit without initialization, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
+                Log.Info($"SiteCron - Exit without initialization, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
                 return;
             }
 
             try
             {
-                Log.Info("Initialize Sitecron: " + Assembly.GetExecutingAssembly().GetName().Version, this);
+                Log.Info("Initialize SiteCron: " + Assembly.GetExecutingAssembly().GetName().Version, this);
                 _scheduler.ClearJobs();
 
-                Log.Info("Loading Sitecron Jobs", this);
+                Log.Info("Loading SiteCron Jobs", this);
 
                 foreach (var job in _jobProvider.GetJobs())
                 {
@@ -49,7 +49,7 @@ namespace Sitecron.Core
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron ERROR: " + ex.Message, ex, this);
+                Log.Error("SiteCron ERROR: " + ex.Message, ex, this);
             }
         }
     }

@@ -75,6 +75,7 @@ namespace Sitecron.SitecronSettings
             public const string SiteCronSavedHandlerType = "SiteCron.SavedHandlerType";
             public const string SiteCronValidTemplates = "SiteCron.ValidTemplates";
             public const string SiteCronGetItemsIndex = "SiteCron.GetItemIndex";
+            public const string ServerTimeZone = "ServerTimeZone";
         }
         public static class Queries
         {

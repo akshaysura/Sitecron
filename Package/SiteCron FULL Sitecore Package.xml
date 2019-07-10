@@ -161,7 +161,16 @@ If you are upgrading, use Merge Append option to get the new out of the box item
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -204,11 +213,20 @@ If you are upgrading, use Merge Append option to get the new out of the box item
       <Name>PowerShell Sample</Name>
     </items>
     <files>
-      <Root>/App_Config/Include/Sitecron</Root>
+      <Root>/App_Config/Include/Z.SiteCron</Root>
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </FileToEntryConverter>
       </Converter>
       <Include>
@@ -243,7 +261,7 @@ If you are upgrading, use Merge Append option to get the new out of the box item
         <x-item>/bin/Quartz.dll</x-item>
         <x-item>/bin/Quartz.pdb</x-item>
         <x-item>/bin/Quartz.xml</x-item>
-        <x-item>/bin/Sitecron.dll</x-item>
+        <x-item>/bin/SiteCron.dll</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>

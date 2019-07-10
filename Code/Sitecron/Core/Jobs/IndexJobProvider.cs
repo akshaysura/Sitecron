@@ -45,7 +45,7 @@ namespace Sitecron.Core.Jobs
             if (!solrItems.Any())
             {
                 //ERROR: There is no method 'GetResults' on type 'Sitecore.ContentSearch.Linq.QueryableExtensions'
-                Log.Warn("Sitecron IndexJobProvider got no results. Trying again assuming its Solr Initialization issue.", this);
+                Log.Warn("SiteCron IndexJobProvider got no results. Trying again assuming its Solr Initialization issue.", this);
                 //might be caused due to solr not initializing
                 System.Threading.Thread.Sleep(3000);
                 solrItems = GetSolrJobs();
@@ -98,7 +98,7 @@ namespace Sitecron.Core.Jobs
             }
             catch (Exception ex)
             {
-                Log.Error("Sitecron IndexJobProvider ERROR: " + ex.Message, ex, this);
+                Log.Error("SiteCron IndexJobProvider ERROR: " + ex.Message, ex, this);
             }
             return siteCronItems;
         }

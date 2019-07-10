@@ -7,6 +7,7 @@ using Sitecron.SitecronSettings;
 using Sitecron.Core.Quartz.Listeners;
 using Sitecron.Core.Jobs;
 using Sitecore;
+using Sitecore.Configuration;
 
 namespace Sitecron.Core.Scheduling
 {
@@ -39,7 +40,8 @@ namespace Sitecron.Core.Scheduling
             {
                 if (CronExpression.IsValidExpression(job.CronExpression))
                 {
-                    Log.Info($"Sitecron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
+                    Log.Info($"SiteCron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters} - Job ItemId:{job.ItemId}", this);
+                    //IScheduleBuilder scheduleBuilder = CronScheduleBuilder.CronSchedule(job.CronExpression).InTimeZone(TimeZoneInfo.Utc);
                     var trigger = TriggerBuilder.Create()
                         .WithIdentity(job.ItemId)
                         .WithCronSchedule(job.CronExpression)
@@ -48,13 +50,13 @@ namespace Sitecron.Core.Scheduling
                     Scheduler.ScheduleJob(jobDetail, trigger);
                 }
                 else
-                    Log.Info($"Sitecron - Job NOT Loaded - Invalid CRON Expression - Job Source: {job.JobSource} - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters}", this);
+                    Log.Info($"SiteCron - Job NOT Loaded - Invalid CRON Expression - Job Source: {job.JobSource} - {job.Name} Type: {job.JobTypeSignature} USING Cron Expression: {job.CronExpression} Parameters: {job.Parameters} - Job ItemId:{job.ItemId}", this);
             }
 
             if (job.ExecuteExactlyAtDateTime.Value != DateTime.MinValue)
             {
                 Log.Info(
-                    $"Sitecron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} Parameters: {job.Parameters}", this);
+                    $"Sitecron - Job Loaded - Job Source: {job.JobSource} - {job.Name} - Type: {job.JobTypeSignature} USING ExecuteExactlyAtDateTime ServerTime: {DateUtil.ToServerTime(job.ExecuteExactlyAtDateTime.Value)} UTC: {job.ExecuteExactlyAtDateTime.Value.ToUniversalTime()} ServerTimeZone:{Settings.GetSetting(SitecronConstants.SettingsNames.ServerTimeZone, "master")} Parameters: {job.Parameters} - Job ItemId:{job.ItemId}", this);
                 var startDateTime =
                     new DateTimeOffset(job.ExecuteExactlyAtDateTime.Value.ToUniversalTime());
                 var trigger = TriggerBuilder.Create()

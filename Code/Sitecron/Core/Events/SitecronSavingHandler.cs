@@ -5,11 +5,14 @@ using System;
 using Sitecore.Data.Events;
 using Sitecore.Data.Managers;
 using Sitecore.Data;
+using System.Collections.Generic;
 
 namespace Sitecron.Core.Events
 {
     public class SitecronSavingHandler
     {
+        private static readonly SynchronizedCollection<ID> _inProcess = new SynchronizedCollection<ID>();
+
         public void OnItemSaving(object sender, EventArgs args)
         {
             Item savingItem = null;
@@ -25,8 +28,10 @@ namespace Sitecron.Core.Events
                 savingItem = Event.ExtractParameter(args, 0) as Item;
             }
 
-            if (savingItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savingItem) && !StandardValuesManager.IsStandardValuesHolder(savingItem))
+            if (savingItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savingItem) && !StandardValuesManager.IsStandardValuesHolder(savingItem) && !_inProcess.Contains(savingItem.ID))
             {
+                _inProcess.Add(savingItem.ID);
+
                 Item existingItem = savingItem.Database.GetItem(savingItem.ID, savingItem.Language, savingItem.Version);
                 if (existingItem.Fields[SitecronConstants.FieldNames.Disable].Value != savingItem.Fields[SitecronConstants.FieldNames.Disable].Value)
                 {
@@ -43,6 +48,7 @@ namespace Sitecron.Core.Events
                     savingItem.Appearance.Icon = icon;
                     savingItem.Appearance.DisplayName = string.Concat(savingItem.Name, appendText);
                 }
+                _inProcess.Remove(savingItem.ID);
             }
         }
     }

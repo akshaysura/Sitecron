@@ -10,12 +10,14 @@ using Sitecore.Diagnostics;
 using static Sitecron.SitecronSettings.SitecronConstants;
 using Sitecore.Data.Managers;
 using Sitecore.Data;
+using System.Collections.Generic;
 
 namespace Sitecron.Core.Events
 {
     public class SitecronSavedHandler
     {
         private readonly IScheduleManager _scheduleManager;
+        private static readonly SynchronizedCollection<ID> _inProcess = new SynchronizedCollection<ID>();
 
         public SitecronSavedHandler(IScheduleManager scheduleManager)
         {
@@ -27,28 +29,32 @@ namespace Sitecron.Core.Events
         {
             Item savedItem = null;
             ItemSavedRemoteEventArgs remoteArgs = args as ItemSavedRemoteEventArgs;
-            ItemChanges savedItemChanges = Event.ExtractParameter(args, 1) as ItemChanges;
+            ItemChanges savedItemChanges = null;
 
             //Thank you Mike Edwards!
             if (remoteArgs != null)
             {
                 savedItem = remoteArgs.Item;
+                savedItemChanges = remoteArgs.Changes;
             }
             else
             {
                 savedItem = Event.ExtractParameter(args, 0) as Item;
+                savedItemChanges = Event.ExtractParameter(args, 1) as ItemChanges;
             }
 
             if (savedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, savedItem) && !StandardValuesManager.IsStandardValuesHolder(savedItem))
             {
-                if (savedItemChanges != null && !savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog))
+                if (savedItemChanges != null && !savedItemChanges.FieldChanges.ContainsAnyOf(SiteCronFieldIds.LastRunUTC, SiteCronFieldIds.NextRunUTC, SiteCronFieldIds.ExecutionTime, SiteCronFieldIds.LastRunLog) && !_inProcess.Contains(savedItem.ID))
                 {
-                    Log.Info($"Sitecron based Item Saved/Created, reloading Jobs. {savedItem.Name} - {savedItem.ID.ToString()}", this);
+                    _inProcess.Add(savedItem.ID);
+                    Log.Info($"SiteCron based Item Saved/Created, reloading Jobs. {savedItem.Name} - {savedItem.ID.ToString()}", this);
                     _scheduleManager.ScheduleAllJobs();
+                    _inProcess.Remove(savedItem.ID);
                 }
                 else
                 {
-                    Log.Info("Sitecron - Ignoring Saved Handler due to stats update.", this);
+                    Log.Info("SiteCron - Ignoring Saved Handler due to stats update.", this);
                 }
             }
             else
@@ -75,7 +81,7 @@ namespace Sitecron.Core.Events
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Sitecron OnItemSaved Custom Type ERROR: " + ex.Message, ex, this);
+                    Log.Error("SiteCron OnItemSaved Custom Type ERROR: " + ex.Message, ex, this);
                 }
             }
         }

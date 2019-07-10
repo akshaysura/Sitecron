@@ -1,4 +1,5 @@
 ﻿using Sitecore.Configuration;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -37,8 +38,11 @@ namespace Sitecron.Core.Commands
                         DateTime executeTime = DateTime.Now.AddSeconds(addExecutionSeconds);
                         newScriptItem[SitecronConstants.FieldNames.CronExpression] = string.Format("{0} {1} {2} 1/1 * ? * ", executeTime.ToString("ss"), executeTime.ToString("mm"), executeTime.ToString("HH"));
                         newScriptItem[SitecronConstants.FieldNames.ArchiveAfterExecution] = "1";
+                        newScriptItem[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime] = "";
                         newScriptItem[SitecronConstants.FieldNames.Disable] = "0";
                     }
+                    var newIndexItem = (SitecoreIndexableItem)newScriptItem;
+                    ContentSearchManager.GetIndex(Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronGetItemsIndex, "sitecore_master_index").Trim()).Refresh(newIndexItem);
                 }
             }
         }
@@ -55,7 +59,7 @@ namespace Sitecron.Core.Commands
             !string.IsNullOrEmpty(instanceName) &&
             !publishingInstance.Equals(instanceName, StringComparison.OrdinalIgnoreCase))
             {
-                Log.Info($"Sitecron - Hide execute now, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
+                Log.Info($"SiteCron - Hide execute now, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
                 return CommandState.Hidden;
             }
 
