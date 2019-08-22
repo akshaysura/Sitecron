@@ -26,10 +26,12 @@ namespace Sitecron.Core
         {
             var publishingInstance = Settings.Publishing.PublishingInstance;
             var instanceName = Settings.InstanceName.ToLower();
+            var usePublishingInstanceAsPrimaryServer = Settings.GetBoolSetting(SitecronConstants.SettingsNames.UsePublishingInstanceAsPrimaryServer, true);
 
-            if (!string.IsNullOrEmpty(publishingInstance) &&
+            if ((!string.IsNullOrEmpty(publishingInstance) &&
                 !string.IsNullOrEmpty(instanceName) &&
-                !publishingInstance.Equals(instanceName, StringComparison.OrdinalIgnoreCase))
+                !publishingInstance.Equals(instanceName, StringComparison.OrdinalIgnoreCase)) 
+                && usePublishingInstanceAsPrimaryServer)
             {
                 Log.Info($"SiteCron - Exit without initialization, this server is not the primary in the load balanced environment. PublishingInstance: {publishingInstance} != InstanceName: {instanceName}", this);
                 return;
