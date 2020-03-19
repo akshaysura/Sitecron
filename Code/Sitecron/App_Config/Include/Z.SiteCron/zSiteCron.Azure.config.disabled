@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <log4net>
+      <appender name="SitecronLogFileAppender">
+        <patch:attribute name="type">Sitecore.Cloud.ApplicationInsights.Logging.LevelTraceAppender, Sitecore.Cloud.ApplicationInsights</patch:attribute>
+        <file>
+          <patch:delete />
+        </file>
+        <appendToFile>
+          <patch:delete />
+        </appendToFile>
+        <encoding>
+          <patch:delete />
+        </encoding>
+      </appender>
+  </sitecore>
+</configuration>

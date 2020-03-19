@@ -125,6 +125,7 @@
     <Content Include="App_Config\Include\Z.SiteCron\SiteCron.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="App_Config\Include\Z.SiteCron\zSiteCron.Azure.config.disabled" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
