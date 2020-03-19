@@ -47,7 +47,7 @@ namespace Sitecron.Core.Jobs
             siteCronJob.LastRunUTC = jobItem[SitecronConstants.FieldNames.LastRunUTC];
             siteCronJob.NextRunUTC = jobItem[SitecronConstants.FieldNames.NextRunUTC];
             siteCronJob.ExecutionTime = jobItem[SitecronConstants.FieldNames.ExecutionTime];
-            siteCronJob.LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunUTC];
+            siteCronJob.LastRunLog = jobItem[SitecronConstants.FieldNames.LastRunLog];
             siteCronJob.SitecoreJobType = jobItem[SitecronConstants.FieldNames.SitecoreJobType];
             siteCronJob.SitecoreJobMethod = jobItem[SitecronConstants.FieldNames.SitecoreJobMethod];
             siteCronJob.SitecoreJobName = jobItem[SitecronConstants.FieldNames.SitecoreJobName];
