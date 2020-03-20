@@ -282,6 +282,31 @@ If you are upgrading, use Merge Append option to get the new out of the box item
       <Exclude />
       <Name>Bin</Name>
     </xfiles>
+    <xitems>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/SiteCron Reports/{BFDF040B-05FD-4B4D-971C-5B1D66AA5085}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/SiteCron Reports/OOTB/{18A47A1F-944E-418A-8D36-4DD59BEA262C}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/SiteCron Reports/OOTB/SiteCron Execution Reports/{E62862B1-03DF-4752-A290-9B505806C515}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Reports</Name>
+    </xitems>
   </Sources>
   <Converter>
     <TrivialConverter>

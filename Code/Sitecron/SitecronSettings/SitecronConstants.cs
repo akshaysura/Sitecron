@@ -59,6 +59,12 @@ namespace Sitecron.SitecronSettings
             public static ID ExecutionTime = new ID("{0D5EDDE7-08A6-424F-B751-CC2C1D48EBBA}");
             public static ID LastRunLog = new ID("{63959259-4721-4370-BFB9-0A93E43E8993}");
         }
+
+        public static class PowerShellFieldIds
+        {
+            public static ID ScriptBody = new ID("{B1A94FF0-6897-47C0-9C51-AA6ACB80B1F0}");
+        }
+
         public static class ParamNames
         {
             public const string zSiteCronItemID = "zSiteCronItemID";

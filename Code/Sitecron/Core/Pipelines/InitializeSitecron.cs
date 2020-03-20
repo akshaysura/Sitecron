@@ -15,6 +15,7 @@ namespace Sitecron.Core.Pipelines
 
         public virtual void Process(PipelineArgs args)
         {
+            _scheduleManager.CleanUpExistingJobs();
             _scheduleManager.ScheduleAllJobs();
         }
     }

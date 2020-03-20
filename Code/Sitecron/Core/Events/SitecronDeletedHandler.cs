@@ -21,19 +21,22 @@ namespace Sitecron.Core.Events
         public void OnItemDeleted(object sender, EventArgs args)
         {
             Item deletedItem = null;
+            ID parentId = null;
             ItemDeletedRemoteEventArgs remoteArgs = args as ItemDeletedRemoteEventArgs;
             if (remoteArgs != null)
             {
                 deletedItem = remoteArgs.Item;
+                parentId = Event.ExtractParameter(remoteArgs, 1) as ID;
             }
             else
             {
                 deletedItem = Event.ExtractParameter(args, 0) as Item;
+                parentId = Event.ExtractParameter(args, 1) as ID;
             }
 
-            if (deletedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, deletedItem) && !StandardValuesManager.IsStandardValuesHolder(deletedItem))
+            if (deletedItem != null && TemplateManager.IsFieldPartOfTemplate(SitecronConstants.SiteCronFieldIds.CronExpression, deletedItem) && !StandardValuesManager.IsStandardValuesHolder(deletedItem) && parentId != SitecronConstants.ItemIds.AutoFolderID)
             {
-                Log.Info("SiteCron based Item Archived/Deleted, reloading Jobs.", this);
+                Log.Info("SiteCron based Item Archived/Deleted, reloading Jobs. (Execute now jobs excluded)", this);
                 _scheduleManager.ScheduleAllJobs();
             }
         }

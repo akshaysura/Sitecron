@@ -3,5 +3,6 @@
     public interface IScheduleManager
     {
         void ScheduleAllJobs();
+        void CleanUpExistingJobs();
     }
 }

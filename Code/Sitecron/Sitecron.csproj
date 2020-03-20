@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cognifide.PowerShell">
-      <HintPath>..\..\Dependencies\Powershell 4.7\Cognifide.PowerShell.dll</HintPath>
+      <HintPath>..\..\Dependencies\PowerShell 4.5\Cognifide.PowerShell.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
@@ -135,7 +135,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="sitecore\admin\SiteCron.aspx" />
-    <Content Include="Sitecron.nuspec" />
+    <Content Include="SiteCron.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <None Include="job_scheduling_data_2_0.xsd">
