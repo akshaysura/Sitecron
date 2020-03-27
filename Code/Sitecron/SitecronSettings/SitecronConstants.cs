@@ -83,6 +83,7 @@ namespace Sitecron.SitecronSettings
             public const string SiteCronGetItemsIndex = "SiteCron.GetItemIndex";
             public const string ServerTimeZone = "ServerTimeZone";
             public const string UsePublishingInstanceAsPrimaryServer = "UsePublishingInstanceAsPrimaryServer";
+            public const string SiteCronEnableExecuteNow = "SiteCron.EnableExecuteNow";
         }
         public static class Queries
         {

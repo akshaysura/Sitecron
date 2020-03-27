@@ -11,6 +11,8 @@ namespace Sitecron.Core.Commands
 {
     public class ExecuteJob : Command
     {
+        public bool EnableButton { get; set; }
+
         public override void Execute(CommandContext context)
         {
             Assert.IsNotNull(context, "context");
@@ -41,8 +43,6 @@ namespace Sitecron.Core.Commands
                         newScriptItem[SitecronConstants.FieldNames.ExecuteExactlyAtDateTime] = "";
                         newScriptItem[SitecronConstants.FieldNames.Disable] = "0";
                     }
-                    var newIndexItem = (SitecoreIndexableItem)newScriptItem;
-                    ContentSearchManager.GetIndex(Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronGetItemsIndex, "sitecore_master_index").Trim()).Refresh(newIndexItem);
                 }
             }
         }
@@ -50,6 +50,9 @@ namespace Sitecron.Core.Commands
         public override CommandState QueryState(CommandContext context)
         {
             if (context.Items.Length != 1)
+                return CommandState.Hidden;
+            
+            if(!Settings.GetBoolSetting(SitecronConstants.SettingsNames.SiteCronEnableExecuteNow, false))
                 return CommandState.Hidden;
 
             var publishingInstance = Settings.Publishing.PublishingInstance;
