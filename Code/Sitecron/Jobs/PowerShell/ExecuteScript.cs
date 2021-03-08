@@ -1,8 +1,4 @@
-﻿using Cognifide.PowerShell;
-using Cognifide.PowerShell.Core.Host;
-using Cognifide.PowerShell.Core.Settings;
-using Cognifide.PowerShell.Core.Extensions;
-using Quartz;
+﻿using Quartz;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -12,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
+using Spe.Core.Extensions;
+using Spe.Core.Host;
+using Spe.Core.Settings;
 
 namespace Sitecron.Jobs.PowerShell
 {
