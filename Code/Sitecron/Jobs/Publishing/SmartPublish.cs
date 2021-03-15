@@ -5,18 +5,18 @@ using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecron.SitecronSettings;
 using System.Collections.Specialized;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Sitecron.Jobs.Publishing
 {
     public class SmartPublish : IJob //Inherit from IJob interface from Quartz
     {
-        public void Execute(IJobExecutionContext context) //Implement the Execute method
+        Task IJob.Execute(IJobExecutionContext context) //Implement the Execute method
         {
             Log.Info("SitePublishJob Execute - Start", this);
 
             //get job parameters
-            JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
+            JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job
             string rawParameters = dataMap.GetString(SitecronConstants.FieldNames.Parameters); //Get the Parameters field in Quartz JobDataMap which maps to the Parameters field in the SiteCron Job item.
             NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters); //Use Sitecore WebUtil to parse the parameters
 
@@ -25,7 +25,7 @@ namespace Sitecron.Jobs.Publishing
             {
                 Database master = Sitecore.Configuration.Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
 
-                Database[] targetDBs = new Database[] { Sitecore.Configuration.Factory.GetDatabase(targetParam) }; 
+                Database[] targetDBs = new Database[] { Sitecore.Configuration.Factory.GetDatabase(targetParam) };
                 Language[] languages = languages = LanguageManager.GetLanguages(master).ToArray();
                 Sitecore.Publishing.PublishManager.PublishSmart(master, targetDBs, languages);
             }
@@ -33,7 +33,9 @@ namespace Sitecron.Jobs.Publishing
                 Log.Warn("SitePublishJob Execute - Target parameter missing", this);
 
             Log.Info("SitePublishJob Execute - End", this);
-            context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "SitePublishJob Execute - End"); 
+            context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "SitePublishJob Execute - End");
+
+            return Task.FromResult<object>(null);
         }
     }
 }

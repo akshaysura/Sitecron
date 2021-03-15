@@ -7,32 +7,27 @@ using Sitecore.Diagnostics;
 using Sitecore.SecurityModel;
 using Sitecron.SitecronSettings;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sitecron.Core.Quartz.Listeners
 {
     public class CustomJobListener : IJobListener
     {
-        public string Name
-        {
-            get
-            {
-                return "CustomJobListener";
-            }
-        }
-
-        public void JobExecutionVetoed(IJobExecutionContext context)
-        {
-            // executes before a job is run, we could stop job execution from starting by returning true
-        }
-
-        //runs before a job is executed 
-        public void JobToBeExecuted(IJobExecutionContext context)
+        public Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = new CancellationToken())
         {
             Log.Info(string.Format("SiteCron - Job {0} in group {1} is about to be executed", context.JobDetail.Key.Name, context.JobDetail.Key.Group), this);
+            return Task.FromResult<object>(null);
         }
 
-        //runs after the job is executed
-        public void JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException)
+        public Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = new CancellationToken())
+        {
+            // executes before a job is run, we could stop job execution from starting by returning true
+            return Task.FromResult<object>(null);
+        }
+
+        public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException,
+            CancellationToken cancellationToken = new CancellationToken())
         {
             JobDataMap dataMap = context.JobDetail.JobDataMap;
 
@@ -43,7 +38,7 @@ namespace Sitecron.Core.Quartz.Listeners
                 archiveItem = true;
 
             if (string.IsNullOrEmpty(id))
-                return;
+                return Task.FromResult<object>(null);
 
             ID itemID;
             if (!ID.TryParse(id, out itemID))
@@ -58,7 +53,7 @@ namespace Sitecron.Core.Quartz.Listeners
 
                 if (contextDb != null)
                 {
-                    SetItemStats(contextDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
+                    SetItemStats(contextDb, itemID, context.FireTimeUtc.DateTime.ToString(), context.NextFireTimeUtc.Value.DateTime.ToString(), context.JobRunTime.TotalSeconds.ToString());
                     if (archiveItem)
                         ArchiveItem(contextDb, itemID);
                 }
@@ -66,13 +61,23 @@ namespace Sitecron.Core.Quartz.Listeners
             Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
             if (masterDb != null)
             {
-                SetItemStats(masterDb, itemID, context.FireTimeUtc.Value.DateTime.ToString(), context.NextFireTimeUtc.HasValue? context.NextFireTimeUtc.Value.DateTime.ToString():string.Empty, context.JobRunTime.TotalSeconds.ToString());
+                SetItemStats(masterDb, itemID, context.FireTimeUtc.DateTime.ToString(), context.NextFireTimeUtc.HasValue ? context.NextFireTimeUtc.Value.DateTime.ToString() : string.Empty, context.JobRunTime.TotalSeconds.ToString());
 
                 //Only do it on master.
-                CreateExecutionReport(dataMap.GetString(SitecronConstants.ParamNames.Name), itemID, dataMap.GetString(SitecronConstants.ParamNames.SitecronJobLogData), context.FireTimeUtc.Value.DateTime.ToString());
+                CreateExecutionReport(dataMap.GetString(SitecronConstants.ParamNames.Name), itemID, dataMap.GetString(SitecronConstants.ParamNames.SitecronJobLogData), context.FireTimeUtc.DateTime.ToString());
 
                 if (archiveItem)
                     ArchiveItem(masterDb, itemID);
+            }
+
+            return Task.FromResult<object>(null);
+        }
+
+        public string Name
+        {
+            get
+            {
+                return "CustomJobListener";
             }
         }
 
@@ -132,6 +137,7 @@ namespace Sitecron.Core.Quartz.Listeners
                 Log.Error("SiteCron ERROR creating Execution report: " + ex.Message, ex, this);
             }
         }
+
         private void ArchiveItem(Database db, ID itemID)
         {
             Item jobItem = db.GetItem(itemID);
