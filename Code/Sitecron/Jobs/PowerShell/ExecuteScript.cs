@@ -4,24 +4,25 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecron.SitecronSettings;
+using Spe.Core.Extensions;
+using Spe.Core.Host;
+using Spe.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Spe.Core.Extensions;
-using Spe.Core.Host;
-using Spe.Core.Settings;
+using System.Threading.Tasks;
 
 namespace Sitecron.Jobs.PowerShell
 {
     public class ExecuteScript : IJob //Inherit from IJob interface from Quartz
     {
-        public void Execute(IJobExecutionContext context) //Implement the Execute method
+        Task IJob.Execute(IJobExecutionContext context) //Implement the Execute method
         {
             try
             {
                 //get job parameters
-                JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
+                JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job
                 string contextDbName = Settings.GetSetting(SitecronConstants.SettingsNames.SiteCronContextDB, "master"); //New setting to figure out what the context DB is - Check SiteCron config file
 
                 string scriptIDs = dataMap.GetString(SitecronConstants.FieldNames.Items); //Get the items field value
@@ -51,6 +52,8 @@ namespace Sitecron.Jobs.PowerShell
             {
                 Log.Error("SiteCron: Powershell.ExecuteScript: ERROR something went wrong - " + ex.Message, ex, this);
             }
+
+            return Task.FromResult<object>(null);
         }
 
         //This is where the PowerShell script is run. Its from SPE code.
@@ -85,76 +88,6 @@ namespace Sitecron.Jobs.PowerShell
                     }
                 }
             }
-
         }
-
-
-        #region Multiple Scripts Scenario
-        ////public void Execute(IJobExecutionContext context)
-        ////{
-        ////    JobDataMap dataMap = context.JobDetail.JobDataMap;
-
-        ////    string scriptIDs = dataMap.GetString(FieldNames.Items);
-        ////    string rawParameters = dataMap.GetString(FieldNames.Parameters);
-
-        ////    Log.Info(string.Format("Sitecron: Powershell.ExecuteScript Instance {0} of ExecuteScript Job - {4}Parameters: {1} {4}Fired at: {2} {4}Next Scheduled For:{3}", context.JobDetail.Key, scriptParams, context.FireTimeUtc.Value.ToString("r"), context.NextFireTimeUtc.Value.ToString("r"), Environment.NewLine), this);
-
-        ////    if (!string.IsNullOrEmpty(scriptIDs))
-        ////    {
-        ////        Database masterDb = Factory.GetDatabase(SitecronConstants.SitecoreDatabases.Master);
-
-        ////        List<Item> scriptItems = new List<Item>();
-        ////        string[] ids = scriptIDs.Split('|');
-        ////        foreach (string id in ids)
-        ////        {
-        ////            scriptItems.Add(masterDb.GetItem(new ID(id)));
-        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Adding Script: {0}", id), this);
-        ////        }
-
-        ////        NameValueCollection parameters = Sitecore.Web.WebUtil.ParseUrlParameters(rawParameters);
-
-        ////        Run(scriptItems.ToArray(), parameters);
-        ////    }
-        ////    else
-        ////        Log.Info("Sitecron: Powershell.ExecuteScript: No scripts found to execute!", this);
-        ////}
-
-
-        //////general bad practice here to allow multiple powershell scripts as there might be dependency
-        //////of one script on another etc, should be one script per scheduled task
-        //////this is shown as an example
-        ////private void Run(Item[] speScripts, NameValueCollection parameters)
-        ////{
-        ////    foreach (var item in speScripts)
-        ////    {
-        ////        var script = item[ScriptItemFieldNames.Script];
-        ////        if (!String.IsNullOrEmpty(script))
-        ////        {
-        ////            Log.Info(string.Format("Sitecron: Powershell.ExecuteScript: Running Script: {0} {1}", item.Name, item.ID.ToString()), this);
-
-        ////            //reset session for each script otherwise the position of the items and env vars set by the previous script will be inherited by the subsequent scripts
-        ////            using (var session = ScriptSessionManager.NewSession(ApplicationNames.Default, true))
-        ////            {
-        ////                //here we are passing the same param collection to all the scripts
-        ////                var paramItems = parameters.AllKeys.SelectMany(parameters.GetValues, (k, v) => new { Key = k, Value = v });
-        ////                foreach (var p in paramItems)
-        ////                { 
-        ////                    if (String.IsNullOrEmpty(p.Key)) continue;
-        ////                    if (String.IsNullOrEmpty(p.Value)) continue;
-
-        ////                    if (session.GetVariable(p.Key) == null)
-        ////                    {
-        ////                        session.SetVariable(p.Key, p.Value);
-        ////                    }
-        ////                }
-
-        ////                session.SetExecutedScript(item);
-        ////                session.SetItemLocationContext(item);
-        ////                session.ExecuteScriptPart(script);
-        ////            }
-        ////        }
-        ////    }
-        ////}
-        #endregion
     }
 }

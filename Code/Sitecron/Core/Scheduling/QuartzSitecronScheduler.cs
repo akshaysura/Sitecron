@@ -1,13 +1,13 @@
-﻿using System;
-using Quartz;
+﻿using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
-using Sitecore.Diagnostics;
-using Sitecron.SitecronSettings;
-using Sitecron.Core.Quartz.Listeners;
-using Sitecron.Core.Jobs;
 using Sitecore;
 using Sitecore.Configuration;
+using Sitecore.Diagnostics;
+using Sitecron.Core.Jobs;
+using Sitecron.Core.Quartz.Listeners;
+using Sitecron.SitecronSettings;
+using System;
 
 namespace Sitecron.Core.Scheduling
 {
@@ -18,7 +18,11 @@ namespace Sitecron.Core.Scheduling
 
         protected virtual IScheduler InitializeScheduler()
         {
-            var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            var scheduler = StdSchedulerFactory.GetDefaultScheduler()
+                .ConfigureAwait(false)
+                .GetAwaiter().
+                GetResult();
+
             scheduler.Start();
 
             //attach Job listener to pickup status on all jobs in all groups

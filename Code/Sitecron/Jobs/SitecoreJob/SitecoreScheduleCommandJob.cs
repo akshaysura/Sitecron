@@ -1,25 +1,26 @@
-﻿using System;
-using Quartz;
+﻿using Quartz;
+using Sitecore.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 using Sitecore.Tasks;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Configuration;
-using Sitecron.SitecronSettings;
 using Sitecron.Core.Jobs;
+using Sitecron.SitecronSettings;
+using System;
 using System.Threading;
+using Task = System.Threading.Tasks.Task;
 
 namespace Sitecron.Jobs.SitecoreJob
 {
     public class SitecoreScheduleCommandJob : IJob //Inherit from IJob interface from Quartz
     {
-        public void Execute(IJobExecutionContext context)
+        Task IJob.Execute(IJobExecutionContext context)
         {
             try
             {
                 //get job parameters
-                JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job 
+                JobDataMap dataMap = context.JobDetail.JobDataMap; //get the datamap from the Quartz job
 
                 var job = (SitecronJob)dataMap[SitecronConstants.ParamNames.SitecronJob]; //get the SitecronJob from the job definition
                 if (job == null)
@@ -44,7 +45,7 @@ namespace Sitecron.Jobs.SitecoreJob
                 if (instance == null)
                     throw new Exception("Unable to instantiate the Sitecore Job Type specified: " + job.SitecoreJobType);
 
-                JobOptions options = new JobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, scheduleItem.CommandItem.InnerItem[SitecronConstants.FieldNames.Method], new object[] { scheduleItem.Items, scheduleItem.CommandItem, scheduleItem });
+                DefaultJobOptions options = new DefaultJobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, scheduleItem.CommandItem.InnerItem[SitecronConstants.FieldNames.Method], new object[] { scheduleItem.Items, scheduleItem.CommandItem, scheduleItem });
 
                 ThreadPriority jobPriority;
                 if (Enum.TryParse<ThreadPriority>(job.SitecoreJobPriority, out jobPriority))
@@ -61,6 +62,8 @@ namespace Sitecron.Jobs.SitecoreJob
                 Log.Error("SiteCron: SitecoreScheduleCommandJob: ERROR something went wrong - " + ex.Message, ex, this);
                 context.JobDetail.JobDataMap.Put(SitecronConstants.ParamNames.SitecronJobLogData, "Sitecron: SitecoreScheduleCommandJob: ERROR something went wrong - " + ex.Message);
             }
+
+            return Task.FromResult<object>(null);
         }
     }
 }
