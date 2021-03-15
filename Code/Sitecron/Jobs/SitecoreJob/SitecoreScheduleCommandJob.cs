@@ -44,7 +44,7 @@ namespace Sitecron.Jobs.SitecoreJob
                 if (instance == null)
                     throw new Exception("Unable to instantiate the Sitecore Job Type specified: " + job.SitecoreJobType);
 
-                JobOptions options = new JobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, scheduleItem.CommandItem.InnerItem[SitecronConstants.FieldNames.Method], new object[] { scheduleItem.Items, scheduleItem.CommandItem, scheduleItem });
+                DefaultJobOptions options = new DefaultJobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, scheduleItem.CommandItem.InnerItem[SitecronConstants.FieldNames.Method], new object[] { scheduleItem.Items, scheduleItem.CommandItem, scheduleItem });
 
                 ThreadPriority jobPriority;
                 if (Enum.TryParse<ThreadPriority>(job.SitecoreJobPriority, out jobPriority))
