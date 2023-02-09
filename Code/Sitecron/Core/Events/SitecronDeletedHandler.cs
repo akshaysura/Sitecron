@@ -1,11 +1,11 @@
-﻿using Sitecore.Data;
+﻿using System;
+using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecron.SitecronSettings;
-using System;
 
 namespace Sitecron.Core.Events
 {
@@ -26,7 +26,7 @@ namespace Sitecron.Core.Events
             if (remoteArgs != null)
             {
                 deletedItem = remoteArgs.Item;
-                parentId = Event.ExtractParameter(remoteArgs, 1) as ID;
+                parentId = remoteArgs.ParentId;
             }
             else
             {
