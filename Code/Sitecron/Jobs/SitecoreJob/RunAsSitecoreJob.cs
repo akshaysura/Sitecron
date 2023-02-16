@@ -1,10 +1,10 @@
-﻿using Quartz;
+﻿using System;
+using System.Threading;
+using Quartz;
 using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 using Sitecron.Core.Jobs;
 using Sitecron.SitecronSettings;
-using System;
-using System.Threading;
 
 namespace Sitecron.Jobs.SitecoreJob
 {
@@ -29,7 +29,7 @@ namespace Sitecron.Jobs.SitecoreJob
                 if (instance == null)
                     throw new Exception("Unable to instantiate the Sitecore Job Type specified: " + job.SitecoreJobType);
 
-                JobOptions options = new JobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, job.SitecoreJobMethod);
+                DefaultJobOptions options = new DefaultJobOptions(job.SitecoreJobName, job.SitecoreJobCategory, job.SitecoreJobSiteName, instance, job.SitecoreJobMethod);
 
                 ThreadPriority jobPriority;
                 if (Enum.TryParse<ThreadPriority>(job.SitecoreJobPriority, out jobPriority))
