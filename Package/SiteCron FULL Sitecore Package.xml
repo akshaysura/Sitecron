@@ -252,14 +252,7 @@ If you are upgrading, use Merge Append option to get the new out of the box item
     </files>
     <xfiles>
       <Entries>
-        <x-item>/bin/Common.Logging.Core.dll</x-item>
-        <x-item>/bin/Common.Logging.Core.pdb</x-item>
-        <x-item>/bin/Common.Logging.Core.xml</x-item>
-        <x-item>/bin/Common.Logging.dll</x-item>
-        <x-item>/bin/Common.Logging.pdb</x-item>
-        <x-item>/bin/Common.Logging.xml</x-item>
         <x-item>/bin/Quartz.dll</x-item>
-        <x-item>/bin/Quartz.pdb</x-item>
         <x-item>/bin/Quartz.xml</x-item>
         <x-item>/bin/SiteCron.dll</x-item>
       </Entries>
