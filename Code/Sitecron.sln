@@ -11,10 +11,12 @@ Global
 		Debug-SC10_0|Any CPU = Debug-SC10_0|Any CPU
 		Debug-SC10_1|Any CPU = Debug-SC10_1|Any CPU
 		Debug-SC10_2|Any CPU = Debug-SC10_2|Any CPU
+		Debug-SC10_3|Any CPU = Debug-SC10_3|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Release-SC10_0|Any CPU = Release-SC10_0|Any CPU
 		Release-SC10_1|Any CPU = Release-SC10_1|Any CPU
 		Release-SC10_2|Any CPU = Release-SC10_2|Any CPU
+		Release-SC10_3|Any CPU = Release-SC10_3|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,6 +27,8 @@ Global
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug-SC10_1|Any CPU.Build.0 = Debug-SC10_1|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug-SC10_2|Any CPU.ActiveCfg = Debug-SC10_2|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug-SC10_2|Any CPU.Build.0 = Debug-SC10_2|Any CPU
+		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug-SC10_3|Any CPU.ActiveCfg = Debug-SC10_3|Any CPU
+		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Debug-SC10_3|Any CPU.Build.0 = Debug-SC10_3|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_0|Any CPU.ActiveCfg = Release-SC10_0|Any CPU
@@ -33,6 +37,8 @@ Global
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_1|Any CPU.Build.0 = Release-SC10_1|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_2|Any CPU.ActiveCfg = Release-SC10_2|Any CPU
 		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_2|Any CPU.Build.0 = Release-SC10_2|Any CPU
+		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_3|Any CPU.ActiveCfg = Release-SC10_3|Any CPU
+		{9DF7F0E7-13D8-4224-AB59-E513C0D4728E}.Release-SC10_3|Any CPU.Build.0 = Release-SC10_3|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
