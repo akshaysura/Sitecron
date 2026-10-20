@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SiteCron.aspx.cs" Inherits="Sitecron.Core.Admin.SiteCronAdminPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeBehind="SiteCron.aspx.cs" Inherits="Sitecron.Core.Admin.SiteCronAdminPage" %>
 
 <!DOCTYPE html>
 <%--EXPERIMENTAL at this moment Friends!--%>
@@ -46,52 +46,60 @@
     </style>
 </head>
 <body>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="/sitecore/admin/">Administration Tools</a> - <h1>SiteCron Jobs Viewer</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-       
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12">
-					Refresh each <a href='sitecron.aspx' class='refresh-link refresh-selected'>No Refresh</a>, <a href='sitecron.aspx?refresh=1' class='refresh-link '>1 sec</a>, <a href='sitecron.aspx?refresh=2' class='refresh-link '>2 sec</a>, <a href='sitecron.aspx?refresh=5' class='refresh-link '>5 sec</a>, <a href='sitecron.aspx?refresh=10' class='refresh-link '>10 sec</a>, <a href='sitecron.aspx?refresh=20' class='refresh-link '>20 sec</a>, <a href='sitecron.aspx?refresh=30' class='refresh-link '>30 sec</a>, <a href='sitecron.aspx?refresh=60' class='refresh-link '>60 sec</a><br /><br />
-					<h3>Scheduled Jobs</h3>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Group</th>
-                                    <th>JobName</th>
-                                    <th>Type</th>
-                                    <th>State</th>
-                                    <th>NextFireTimeUtc</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%foreach (var job in this.QuartzJobs)
-                                    { %>
-                                <tr>
-                                    <td><%=job.Group %></td>
-                                    <td><%=job.JobName %></td>
-                                    <td><%=job.Type %></td>
-                                    <td><%=job.State %></td>
-                                    <td><%=job.NextFireTimeUtc %></td>
-                                </tr>
-                                <%} %>
-                            </tbody>
-                        </table>
+    <form id="form1" runat="server">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="/sitecore/admin/">Administration Tools</a> - <h1>SiteCron Jobs Viewer</h1>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        Refresh each <a href='sitecron.aspx' class='refresh-link refresh-selected'>No Refresh</a>, <a href='sitecron.aspx?refresh=1' class='refresh-link '>1 sec</a>, <a href='sitecron.aspx?refresh=2' class='refresh-link '>2 sec</a>, <a href='sitecron.aspx?refresh=5' class='refresh-link '>5 sec</a>, <a href='sitecron.aspx?refresh=10' class='refresh-link '>10 sec</a>, <a href='sitecron.aspx?refresh=20' class='refresh-link '>20 sec</a>, <a href='sitecron.aspx?refresh=30' class='refresh-link '>30 sec</a>, <a href='sitecron.aspx?refresh=60' class='refresh-link '>60 sec</a><br /><br />
+                        <h3>Scheduled Jobs</h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>JobName</th>
+                                        <th>Type</th>
+                                        <th>State</th>
+                                        <th>NextFireTimeUtc</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <asp:Repeater ID="JobRepeater" runat="server" OnItemCommand="JobRepeater_ItemCommand">
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td><%# Eval("Group") %></td>
+                                                <td><%# Eval("JobName") %></td>
+                                                <td><%# Eval("Type") %></td>
+                                                <td><%# Eval("State") %></td>
+                                                <td><%# Eval("NextFireTimeUtc") %></td>
+                                                <td>
+                                                    <asp:Button ID="btnExecute" runat="server" Text="Execute" CssClass="btn btn-xs btn-primary"
+                                                        CommandName="Execute" CommandArgument='<%# Eval("Key") %>'
+                                                        UseSubmitBehavior="false" />
+                                                </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <script type="text/javascript">
         function getQueryString() {

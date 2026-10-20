@@ -5,73 +5,96 @@ using Sitecore.sitecore.admin;
 using Sitecron.SitecronSettings;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Sitecron.Core.Admin
 {
     public class SiteCronAdminPage : AdminPage
     {
-        protected List<QuartzJobDetail> QuartzJobs;
-        protected List<QuartzExecutingJobDetail> QuartzExecutingJobs;
+        protected Repeater JobRepeater;
 
-        static SiteCronAdminPage()
+        protected void Page_Load(object sender, EventArgs e)
         {
+            CheckSecurity();
+
+            if (IsPostBack)
+            {
+                return;
+            }
+
+            RegisterAsyncTask(new PageAsyncTask(async () =>
+            {
+                JobRepeater.DataSource = await GetJobs();
+                JobRepeater.DataBind();
+            }));
         }
 
-        public SiteCronAdminPage()
+        protected void JobRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            QuartzJobs = new List<QuartzJobDetail>();
-            QuartzExecutingJobs = new List<QuartzExecutingJobDetail>();
+            if (e.CommandName != "Execute")
+            {
+                return;
+            }
+
+            var parts = e.CommandArgument.ToString().Split('.');
+            var jobKey = JobKey.Create(parts[1], parts[0]);
+
+            RegisterAsyncTask(new PageAsyncTask(async () =>
+            {
+                var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+                await scheduler.TriggerJob(jobKey);
+
+                Response.Redirect(Request.Url.PathAndQuery, false);
+                Context.ApplicationInstance.CompleteRequest();
+            }));
         }
 
-        protected override void OnLoad(EventArgs e)
+        private static async Task<List<QuartzJobDetail>> GetJobs()
         {
-            base.OnLoad(e);
-            base.CheckSecurity();
+            var outputJobs = new List<QuartzJobDetail>();
 
-            GetJobs();
-            //GetExecutingJobs();
-        }
-
-        private void GetJobs()
-        {
-            var scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            IReadOnlyCollection<string> jobGroups = scheduler.Result.GetJobGroupNames().Result;
-
+            var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+            var jobGroups = await scheduler.GetJobGroupNames();
             foreach (string group in jobGroups)
             {
                 var groupMatcher = GroupMatcher<JobKey>.GroupContains(group);
-                var jobKeys = scheduler.Result.GetJobKeys(groupMatcher).Result;
-                foreach (var jobKey in jobKeys)
+                var jobKeysInGroup = await scheduler.GetJobKeys(groupMatcher);
+                foreach (JobKey jobKey in jobKeysInGroup)
                 {
-                    var detail = scheduler.Result.GetJobDetail(jobKey).Result;
-                    var triggers = scheduler.Result.GetTriggersOfJob(jobKey).Result;
-                    foreach (ITrigger trigger in triggers)
+                    var jobDetail = await scheduler.GetJobDetail(jobKey);
+                    var jobTriggers = await scheduler.GetTriggersOfJob(jobKey);
+                    foreach (ITrigger jobTrigger in jobTriggers)
                     {
-                        var newJob = new QuartzJobDetail();
-                        newJob.Group = group;
-                        newJob.JobName = detail.JobDataMap.Get(SitecronConstants.ParamNames.Name).ToString();
-                        newJob.Type = detail.JobType.ToString();
-                        newJob.State = scheduler.Result.GetTriggerState(trigger.Key).Result.ToString();
-                        DateTimeOffset? nextFireTime = trigger.GetNextFireTimeUtc();
-                        if (nextFireTime.HasValue)
+                        QuartzJobDetail quartzJobDetail = new QuartzJobDetail
                         {
-                            newJob.NextFireTimeUtc = nextFireTime.Value.LocalDateTime.ToString();
+                            Group = group,
+                            JobName = jobDetail.JobDataMap.Get(SitecronConstants.ParamNames.Name).ToString(),
+                            Type = jobDetail.JobType.ToString(),
+                            State = (await scheduler.GetTriggerState(jobTrigger.Key)).ToString(),
+                            Key = jobKey
+                        };
+
+                        DateTimeOffset? nextFireTimeUtc = jobTrigger.GetNextFireTimeUtc();
+                        if (nextFireTimeUtc.HasValue)
+                        {
+                            quartzJobDetail.NextFireTimeUtc = nextFireTimeUtc.Value.UtcDateTime.ToString("yyyy-MM-dd HH:mm:ss 'UTC'", CultureInfo.InvariantCulture);
                         }
-                        QuartzJobs.Add(newJob);
+
+                        outputJobs.Add(quartzJobDetail);
                     }
                 }
             }
-        }
-    }
 
-    public class QuartzExecutingJobDetail
-    {
-        public string JobName { get; set; }
-        public string RunTime { get; set; }
+            return outputJobs;
+        }
     }
 
     public class QuartzJobDetail
     {
+        public JobKey Key { get; set; }
         public string Group { get; set; }
         public string JobName { get; set; }
         public string Type { get; set; }
